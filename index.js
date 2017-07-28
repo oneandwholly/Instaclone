@@ -1,23 +1,24 @@
 const express = require('express');
+const http = require('http');
 const path = require('path');
+const morgan = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
+const router = require('./router');
 
+
+// App Setup
+app.use(morgan('combined'));
+app.use(cors());
+app.use(bodyParser.json({ type: '*/json' }));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+router(app);
 
-// Put all API endpoints under '/api'
-app.get('/api/passwords', (req, res) => {
+const port = process.env.PORT || 1080;
+const server = http.createServer(app);
+server.listen(port);
 
-});
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
-const port = process.env.PORT || 7700;
-app.listen(port);
-
-console.log(`Password generator listening on ${port}`);
+console.log(`listening on ${port}`);

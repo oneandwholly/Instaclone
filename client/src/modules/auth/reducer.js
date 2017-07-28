@@ -7,9 +7,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case a.LOG_IN:
+    case a.LOGIN:
       return { ...state, error: '', authenticated: true };
-    case a.LOG_OUT:
+    case a.LOGOUT:
       return { ...state, error: '', authenticated: false };
     case a.ERROR:
       return { ...state, error: action.payload };
