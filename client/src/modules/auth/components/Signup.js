@@ -2,6 +2,8 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { getErrorMessage } from '../selectors';
+import { createStructuredSelector } from 'reselect';
 
 const validate = values => {
   const errors = {}
@@ -44,6 +46,14 @@ const renderField = ({
     </div>
   </div>
 
+const renderAlert = (errorMessage) => {
+  if (errorMessage) {
+    return <div className="alert alert-danger">
+      <strong>Oops!</strong> {errorMessage}
+    </div>
+  }
+}
+
 const Signup = props => {
   const { handleSubmit, pristine, submitting } = props
   return (
@@ -53,6 +63,7 @@ const Signup = props => {
       <Field name="password" type="password" component={renderField} label="Password" />
       <Field name="passwordConfirm" type="password" component={renderField} label="Confirm Password" />
       <div>
+        {renderAlert(props.errorMessage)}
         <button type="submit" disabled={pristine || submitting}>
           Submit
         </button>
@@ -61,7 +72,9 @@ const Signup = props => {
   );
 };
 
-export default connect(null, actions)(reduxForm({
+export default connect(createStructuredSelector({
+  errorMessage: getErrorMessage
+}), actions)(reduxForm({
   form: 'signup', // a unique identifier for this form
   validate
 })(Signup));

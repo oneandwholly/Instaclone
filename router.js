@@ -1,3 +1,4 @@
+const path = require('path');
 const Authentication = require('./controllers/authentication');
 
 module.exports = (app) => {

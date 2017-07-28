@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const router = require('./router');
+const db = require('./db');
 
 
 // App Setup
@@ -18,7 +19,15 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 router(app);
 
 const port = process.env.PORT || 1080;
-const server = http.createServer(app);
-server.listen(port);
 
-console.log(`listening on ${port}`);
+db.connect(db.MODE_PRODUCTION, (err) => {
+  if (err) {
+    console.log('Unable to connect to MySQL.');
+    process.exit(1);
+  } else {
+    const server = http.createServer(app);
+    server.listen(port, (err) => {
+      console.log(`listening on ${port}`);
+    });
+  }
+})

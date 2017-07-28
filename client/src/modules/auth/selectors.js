@@ -7,6 +7,8 @@ export const getAll = state => state[NAME];
 
 export const getAuthenticated = state => state[NAME].authenticated;
 
+export const getErrorMessage = state => state[NAME].error;
+
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //
 // export const getActive = _.compose(filterActive, getAll);
