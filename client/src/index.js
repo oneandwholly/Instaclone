@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import app from './modules/app';
+import auth from './modules/auth';
 
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -14,6 +15,13 @@ const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(reduxThunk),
   // other store enhancers if any
 ));
+
+const token = localStorage.getItem('token');
+
+if (token) {
+  store.dispatch({ type: auth.actionTypes.LOGIN });
+  //get user info from token
+}
 
 ReactDOM.render(
   <Provider store={store}>

@@ -20,11 +20,11 @@ export const signupUser = ({
       password
     })
       .then(res => {
+        localStorage.setItem('token', res.data.token);
         // If request is good..
         // - Update the state to indicate user is authenticated
         dispatch({ type: a.LOGIN });
         // - Save the JWT token
-        localStorage.setItem('token', res.data.token);
       })
       .catch(error => {
         const res = error.response;

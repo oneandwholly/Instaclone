@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt-nodejs');
-var db = require('../db.js');
 // CREATE TABLE users (
 //   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 //   username VARCHAR(255) NOT NULL UNIQUE,
@@ -30,17 +28,42 @@ var db = require('../db.js');
 //     done(null, rows)
 //   })
 // }
+const bcrypt = require('bcrypt-nodejs');
+var db = require('../db.js');
 
+exports.getOneById = (user_id, done) => {
+  db.get().query('SELECT * FROM users WHERE id = ?', user_id, (err, rows) => {
+    if (err) return done(err);
+    const { id, username, email } = rows[0];
+    done(null, { id, username, email });
+  });
+}
 
+exports.getOneByEmail = (email, done) => {
+
+  db.get().query('SELECT * FROM users WHERE email = ?', email, (err, rows) => {
+    if (err) { return done(err); }
+    const user = rows[0];
+    done(null, user);
+  });
+}
+
+exports.getOneByUsername = (username, done) => {
+
+  db.get().query('SELECT * FROM users WHERE username = ?', username, (err, rows) => {
+    if (err) { return done(err); }
+    const user = rows[0];
+    done(null, user);
+  });
+}
 
 exports.create = ({ username, email, password }, done) => {
-
   bcrypt.genSalt(10, (err, salt) => {
-    if (err) return done(err);
+    if (err) { return done(err); }
 
     // hash (encrypt) password with salt
     bcrypt.hash(password, salt, null, (err, hash) => {
-      if (err) return done(err);
+      if (err) { return done(err); }
 
       // overwrite plain text password w/ encrypted password
       password = hash;
@@ -48,11 +71,17 @@ exports.create = ({ username, email, password }, done) => {
       const values = [username, email, password];
 
       db.get().query('INSERT INTO users (username, email, password) VALUES(?, ?, ?)', values, (err, results) => {
-        console.log('err in User.create', err);
-        if (err) return done(err);
+        if (err) { return done(err); }
         // AUTO_INCREMENT gives back insertId
         done(null, results.insertId);
       });
     });
+  });
+}
+
+exports.comparePassword = (candidatePassword, userPassword, done) => {
+  bcrypt.compare(candidatePassword, userPassword, function(err, isMatch) {
+    if (err) { return done(err); }
+    done(null, isMatch);
   });
 }
