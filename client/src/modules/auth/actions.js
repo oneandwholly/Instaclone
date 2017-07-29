@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as a from './actionTypes';
 import app from '../app';
+import nav from '../nav';
 
 export const authError = (error) =>
     ({
@@ -20,11 +21,16 @@ export const signupUser = ({
       password
     })
       .then(res => {
-        localStorage.setItem('token', res.data.token);
         // If request is good..
+        // - Save the JWT token
+        localStorage.setItem('token', res.data.token);
         // - Update the state to indicate user is authenticated
         dispatch({ type: a.LOGIN });
-        // - Save the JWT token
+        // set active nav to home
+        dispatch({
+          type: nav.actionTypes.SET_ACTIVE,
+          payload: 'home'
+        });
       })
       .catch(error => {
         const res = error.response;

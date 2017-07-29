@@ -1,14 +1,8 @@
 import * as u from './actionTypes';
 
 const initialState = {
-  all: {
-    0: {
-      id: 0,
-      username: 'username',
-      email: 'username@email.com'
-    }
-  },
-  loggedIn: 0
+  all: { },
+  loggedIn: null
 };
 
 export default (state = initialState, action) => {
