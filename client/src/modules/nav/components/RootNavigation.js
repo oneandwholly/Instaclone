@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { getActive } from '../selectors';
 
 import BottomNavigation from './BottomNavigation';
 import * as actions from '../actions';
 
 class RootNavigation extends Component {
+  componentWillReceiveProps(newProps) {
+    console.log('newProps',newProps);
+  }
+
   render() {
     const transparentStyle = {
     'position': 'fixed',
@@ -23,4 +28,6 @@ class RootNavigation extends Component {
   }
 }
 
-export default connect(null, actions)(RootNavigation);
+export default connect(createStructuredSelector({
+  active: getActive
+}), actions)(RootNavigation);
