@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 import app from '../app';
+import * as p from './actionTypes';
 
 export function postPhotos(data, cb) {
-  console.log(data)
   return function(dispatch) {
 
     Date.prototype.toBasicISOString = function() {
@@ -47,23 +47,44 @@ export function postPhotos(data, cb) {
       headers: { authorization: localStorage.getItem('token')}
     };
     const s3Url = 'https://' + bucket + '.s3.amazonaws.com/';
-    console.log('body', body)
-    axios.post(`${app.constants.ROOT_URL}/api/v1/photos`, body, config)
-      .then(resp => {
+    let photo_id;
+    return axios.post(`${app.constants.ROOT_URL}/api/v1/photos`, body, config)
+      .then(res => {
+        photo_id=res.data.insertId;
         let body = new FormData();
         body.append('key', key); // order matters?
         body.append('file', file);
-        body.append('policy', resp.data.policy);
+        body.append('policy', res.data.policy);
         body.append('x-amz-algorithm', algorithm);
         body.append('x-amz-credential', credential);
         body.append('x-amz-date', dStr);
-        body.append('x-amz-signature', resp.data.signature);
+        body.append('x-amz-signature', res.data.signature);
 
         return axios.post(s3Url, body);
       })
-      .then((response) => {
+      .then((res) => {
+        console.log(photo_id);
+        dispatch(getPhotoById(photo_id))
         cb();
       })
+  }
+}
+
+export const getPhotoById = (photo_id) => {
+  return (dispatch) => {
+
+      const config = {
+        headers: { authorization: localStorage.getItem('token') }
+      };
+
+      return axios.get(`${app.constants.ROOT_URL}/api/v1/photos/${photo_id}`, config)
+        .then((res) => {
+          console.log('created_at?', res.data);
+          dispatch({
+            type: p.ADD,
+            payload: res.data
+          });
+        })
 
   }
 }

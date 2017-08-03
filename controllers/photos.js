@@ -10,7 +10,8 @@ exports.upload = function(req, res, next) {
     if (err) { return next(err); }
     const resp = JSON.stringify({
       policy: req.body,
-      signature: aws.signRequest(req.body)
+      signature: aws.signRequest(req.body),
+      insertId
     });
 
     res.writeHead(200, {
@@ -19,4 +20,12 @@ exports.upload = function(req, res, next) {
     });
     res.end(resp);
   })
+}
+
+exports.getOneById = (req, res, next) => {
+  const photo_id = req.params.id;
+  return Photo.getOneById(photo_id, (error, user) => {
+    return res.json(user);
+  });
+  next();
 }

@@ -15,6 +15,7 @@ module.exports = (app) => {
   app.get('/api/v1/users', requireAuth, Users.getUsers);
   app.get('/api/v1/users/:id', requireAuth, Users.getOneById);
   app.post('/api/v1/photos', requireAuth, Photos.upload);
+  app.get('/api/v1/photos/:id', requireAuth, Photos.getOneById);
 
   // The "catchall" handler: for any request that doesn't
   // match one above, send back React's index.html file.

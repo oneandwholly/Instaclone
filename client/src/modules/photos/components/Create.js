@@ -35,11 +35,12 @@ class Create extends Component {
     this.state = { redirect: false };
   }
 
+  setRedirectToTrue() {
+    this.setState({ redirect: true });
+  }
+
   onSubmit(data) {
-    const setRedirectToTrue = function() {
-      this.setState({ redirect: true });
-    }
-    this.props.postPhotos(data, setRedirectToTrue.bind(this));
+    this.props.postPhotos(data, this.setRedirectToTrue.bind(this));
   }
 
   render() {
