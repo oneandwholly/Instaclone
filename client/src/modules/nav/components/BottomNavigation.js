@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 //import BottomNavigationItem from './BottomNavigationItem';
 import * as actions from '../actions';
 import users from '../../users';
+import auth from '../../auth';
 
 class BottomNavigation extends Component {
   componentWillMount() {
@@ -13,6 +14,10 @@ class BottomNavigation extends Component {
   }
 
   render() {
+    let currentUsername = '';
+    if (this.props.currentUser) {
+      currentUsername = this.props.currentUser.username;
+    }
     const navStyle = {
       'pointerEvents': 'auto',
       'overflow': 'hidden',
@@ -49,12 +54,16 @@ class BottomNavigation extends Component {
             <Link to='/explore' style={navItemStyle}>Explore</Link>
             <Link to='/create' style={navItemStyle}>Create</Link>
             <Link to='/activity' style={navItemStyle}>Activity</Link>
-            <Link to={`/${this.props.username}`} style={navItemStyle}>Profile</Link>
+            <Link to={`/${currentUsername}`} style={navItemStyle}>Profile</Link>
         </nav>
       );
   }
 }
 
-export default connect(createStructuredSelector({
-  username: users.selectors.getAuthUsername
-}), actions)(BottomNavigation);
+export default connect(createSelector(
+  auth.selectors.getCurrentUserId,
+  users.selectors.getAllUsersById,
+  (currentUserId, allUsersById) => ({
+    currentUser: allUsersById[currentUserId]
+  })
+), actions)(BottomNavigation);

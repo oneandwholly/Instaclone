@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect';
 
 import auth from '../../auth';
 import nav from '../../nav';
-import home from '../../home';
 import photos from '../../photos';
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
 
   renderIndexRoute() {
     if (this.props.authenticated) {
-      return home.components.HomeFeed;
+      return photos.components.HomeFeed;
     }
     return auth.components.IndexRoute;
   }

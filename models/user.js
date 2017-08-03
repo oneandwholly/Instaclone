@@ -29,7 +29,7 @@
 //   })
 // }
 const bcrypt = require('bcrypt-nodejs');
-var db = require('../db.js');
+const db = require('../db.js');
 
 exports.getOneById = (user_id, done) => {
   db.get().query('SELECT * FROM users WHERE id = ?', user_id, (err, rows) => {

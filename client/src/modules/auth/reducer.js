@@ -2,7 +2,7 @@ import * as a from './actionTypes';
 
 const initialState = {
   authenticated: false,
-  currentUser: null,
+  currentUserId: null,
   error: ''
 };
 
@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case a.LOGOUT:
       return { ...state, error: '', authenticated: false };
     case a.SET_CURRENT_USER:
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUserId: action.payload };
     case a.ERROR:
       return { ...state, error: action.payload };
     default:

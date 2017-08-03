@@ -1,14 +1,12 @@
-//import { createSelector } from 'reselect';
-//import _ from 'lodash';
+// import { createSelector } from 'reselect';
+import _ from 'lodash';
 import { NAME } from './constants';
-// import { filterActive, filterCompleted } from './model';
+import { getByIdProp } from './model';
 
 export const getAll = state => state[NAME];
 
-export const getAuthUsername = state => {
-  if(state[NAME].loggedIn)
-  return state[NAME].all[state[NAME].loggedIn].username;
-}
+export const getAllUsersById = _.flow(getAll, getByIdProp);
+
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

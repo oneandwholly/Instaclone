@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { getAuthenticated } from '../selectors';
 import Signup from './Signup';
 
 class IndexRoute extends Component {

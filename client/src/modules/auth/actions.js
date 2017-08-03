@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as a from './actionTypes';
 import app from '../app';
 import users from '../users';
+//import * as constants from './constants;'
 
 export const authError = (error) =>
     ({
@@ -59,7 +60,7 @@ export const getUserIdFromToken = () => {
 export const setCurrentUser = () => {
   return (dispatch, getState) => {
     return dispatch(getUserIdFromToken()).then(() => {
-      const user_id = getState().auth.currentUser;
+      const user_id = getState().auth.currentUserId;
       return dispatch(users.actions.getUserById(user_id));
     })
   }

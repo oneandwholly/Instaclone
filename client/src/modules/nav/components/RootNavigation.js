@@ -9,10 +9,10 @@ import * as actions from '../actions';
 
 class RootNavigation extends Component {
   componentWillMount() {
-    console.log('this.props in RootNavigation.componentWillMount', this.props)
+    //console.log('this.props in RootNavigation.componentWillMount', this.props)
   }
   componentWillReceiveProps(newProps) {
-    console.log('newProps in RootNavigation.componentWillReceiveProps',newProps);
+    //console.log('newProps in RootNavigation.componentWillReceiveProps',newProps);
   }
 
   renderBottomNavigation() {
