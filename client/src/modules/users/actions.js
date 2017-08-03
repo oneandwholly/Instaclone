@@ -17,3 +17,18 @@ export const getUserById = (user_id) => {
           })
     }
 }
+
+export const getUserByUsername = (username) => {
+  return (dispatch) => {
+      const config = {
+        headers: { authorization: localStorage.getItem('token') }
+      };
+      return axios.get(`${app.constants.ROOT_URL}/api/v1/users/${}`, config)
+        .then((res) => {
+          dispatch({
+            type: u.ADD,
+            payload: res.data
+          });
+        })
+  }
+}

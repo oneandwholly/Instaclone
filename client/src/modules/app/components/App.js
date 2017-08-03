@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import auth from '../../auth';
 import nav from '../../nav';
 import photos from '../../photos';
+import users from '../../users';
 
 class App extends Component {
   //get currently logged in user info from existing token
@@ -33,9 +34,12 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route path='/' exact component={this.renderIndexRoute()} />
-          <Route path='/p/:photo_id' component={photos.components.Card} />
-          <Route path='/create' component={photos.components.Create} />
+          <Switch>
+            <Route path='/' exact component={this.renderIndexRoute()} />
+            <Route path='/p/:photo_id' component={photos.components.Card} />
+            <Route path='/create' exact component={photos.components.Create} />
+            <Route path='/:username' component={users.components.Profile} />
+          </Switch>
           <nav.components.RootNavigation authenticated={this.props.authenticated} />
         </div>
       </BrowserRouter>

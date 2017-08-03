@@ -63,7 +63,6 @@ export function postPhotos(data, cb) {
         return axios.post(s3Url, body);
       })
       .then((res) => {
-        console.log(photo_id);
         dispatch(getPhotoById(photo_id))
         cb();
       })
@@ -79,7 +78,6 @@ export const getPhotoById = (photo_id) => {
 
       return axios.get(`${app.constants.ROOT_URL}/api/v1/photos/${photo_id}`, config)
         .then((res) => {
-          console.log('created_at?', res.data);
           dispatch({
             type: p.ADD,
             payload: res.data
