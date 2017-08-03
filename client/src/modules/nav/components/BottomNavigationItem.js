@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { createStructuredSelector } from 'reselect';
+import { getActive } from '../selectors';
+import { Link } from 'react-router-dom';
 
 class BottomNavigationItem extends Component {
   handleClick(e) {
     e.preventDefault();
-    this.props.selectNavigationItem(this.props.name);
+    this.props.selectCreate();
   }
 
   render() {
@@ -22,10 +25,18 @@ class BottomNavigationItem extends Component {
       'width': '20%'
     };
 
+
+
+    if (this.props.active === this.props.name) {
+      return <Link style={style} to='/create'><b>{this.props.name}</b></Link>
+    }
+
     return (
-      <a style={style} onClick={this.handleClick.bind(this)}>{this.props.name}</a>
+      <Link style={style} to='/create'>{this.props.name}</Link>
     );
   }
 }
 
-export default connect(null, actions)(BottomNavigationItem);
+export default connect(createStructuredSelector({
+  active: getActive
+}), actions)(BottomNavigationItem);

@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import auth from '../../auth';
-import users from '../../users';
 import nav from '../../nav';
+import home from '../../home';
+import photos from '../../photos';
 
 class App extends Component {
   //get currently logged in user info from existing token
   componentWillMount() {
     if(this.props.authenticated) {
-      this.props.getUserFromOwnToken();
+      this.props.setCurrentUser();
     }
   }
 
-  //get user info who just signe up or logged in who just got the token
+  //get user info from who just signed up or logged in
   componentWillReceiveProps(newProps) {
     if(this.props.authenticated === false && newProps.authenticated === true) {
-      newProps.getUserFromOwnToken();
+      newProps.setCurrentUser();
     }
+  }
+
+  renderIndexRoute() {
+    if (this.props.authenticated) {
+      return home.components.HomeFeed;
+    }
+    return auth.components.IndexRoute;
   }
 
   render() {
     return (
-      <div>
-        <Route path='/' exact component={auth.components.IndexRoute} />
-        <nav.components.RootNavigation authenticated={this.props.authenticated} />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Route path='/' exact component={this.renderIndexRoute()} />
+          <Route path='/p/:photo_id' component={photos.components.Card} />
+          <Route path='/create' component={photos.components.Create} />
+          <nav.components.RootNavigation authenticated={this.props.authenticated} />
+        </div>
+      </BrowserRouter>
     );
   }
 }
@@ -35,4 +47,4 @@ class App extends Component {
 export default connect(
   createStructuredSelector({
     authenticated: auth.selectors.getAuthenticated
-  }),{ getUserFromOwnToken: users.actions.getUserFromOwnToken })(App);
+  }),{ setCurrentUser: auth.actions.setCurrentUser })(App);

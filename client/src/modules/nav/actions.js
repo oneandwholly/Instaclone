@@ -1,4 +1,5 @@
 import * as n from './actionTypes';
+import createHistory from 'history/createBrowserHistory';
 
 export const selectNavigationItem = (name) => {
   return (dispatch) => {
@@ -15,7 +16,10 @@ export const selectExplore = () => {
 }
 
 export const selectCreate = () => {
-
+  return (dispatch) => {
+    const history = createHistory();
+    history.push('/create');
+  }
 }
 
 export const selectActivity = () => {

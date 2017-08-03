@@ -12,17 +12,20 @@ class IndexRoute extends Component {
     this.toggleDisplay = this.toggleDisplay.bind(this);
   }
 
+  componentWillMount() {
+    console.log('IndexRoute this.props',this.props)
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('IndexRoute NewProps',newProps)
+  }
+
   toggleDisplay() {
     this.setState({ displaySignup: !this.state.displaySignup });
   }
 
   render() {
-    // If the user is logged in,
-    if (this.props.authenticated) {
-      return (
-        <div>Home</div>
-      );
-    } else if(this.state.displaySignup) {
+    if(this.state.displaySignup) {
       return (
         <Signup />
       );
@@ -39,8 +42,4 @@ class IndexRoute extends Component {
 export { IndexRoute };
 
 // The default export is the connected component.
-export default connect(
-  createStructuredSelector({
-    authenticated: getAuthenticated
-  })
-)(IndexRoute);
+export default connect()(IndexRoute);

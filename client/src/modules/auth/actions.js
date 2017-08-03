@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as a from './actionTypes';
 import app from '../app';
-import nav from '../nav';
+import users from '../users';
 
 export const authError = (error) =>
     ({
@@ -15,7 +15,7 @@ export const signupUser = ({
   password
 }) =>
   (dispatch) => {
-    axios.post(`${app.constants.ROOT_URL}/api/v1/signup`, {
+    return axios.post(`${app.constants.ROOT_URL}/api/v1/signup`, {
       username,
       email,
       password
@@ -26,14 +26,41 @@ export const signupUser = ({
         localStorage.setItem('token', res.data.token);
         // - Update the state to indicate user is authenticated
         dispatch({ type: a.LOGIN });
-        // set active nav to home
-        dispatch({
-          type: nav.actionTypes.SET_ACTIVE,
-          payload: 'home'
-        });
       })
       .catch(error => {
         const res = error.response;
         dispatch(authError(res.data.error));
       });
   }
+
+export const getUserIdFromToken = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const config = {
+        headers: { authorization: token },
+        params: {
+          token: true
+        }
+      };
+
+      return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
+        .then((res) => {
+          dispatch({
+            type: a.SET_CURRENT_USER,
+            payload: res.data
+          });
+        });
+    }
+  }
+}
+
+
+export const setCurrentUser = () => {
+  return (dispatch, getState) => {
+    return dispatch(getUserIdFromToken()).then(() => {
+      const user_id = getState().auth.currentUser;
+      return dispatch(users.actions.getUserById(user_id));
+    })
+  }
+}

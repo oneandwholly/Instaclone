@@ -9,7 +9,6 @@ import reduxThunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(reduxThunk),
@@ -25,7 +24,5 @@ if (token) {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router >
-      <app.components.App />
-    </Router>
+    <app.components.App />
   </Provider>, document.getElementById('root'));
