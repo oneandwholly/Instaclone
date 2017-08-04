@@ -86,3 +86,20 @@ export const getPhotoById = (photo_id) => {
 
   }
 }
+
+export const getPhotosByUserId = (user_id) => {
+  return (dispatch) => {
+    const config = {
+      headers: { authorization: localStorage.getItem('token') }
+    };
+
+    return axios.get(`${app.constants.ROOT_URL}/api/v1/users/${user_id}/photos`, config)
+      .then((res) => {
+        console.log('photos', res.data);
+          dispatch({
+            type: p.ADD_ARRAY,
+            payload: res.data
+          })
+      })
+  }
+}

@@ -10,6 +10,8 @@ export default (state = initialState, action) => {
       const { id, username, email } = action.payload;
       const newById = { ...state.byId, [id]: { id, username, email } };
       return { ...state, byId: newById };
+    case u.SET_PROFILE_USER:
+      return { ...state , profileUserId: action.payload };
     default :
       return state;
   }

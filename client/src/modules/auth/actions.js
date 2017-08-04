@@ -16,6 +16,11 @@ export const signupUser = ({
   password
 }) =>
   (dispatch) => {
+    console.log({
+      username,
+      email,
+      password
+})
     return axios.post(`${app.constants.ROOT_URL}/api/v1/signup`, {
       username,
       email,

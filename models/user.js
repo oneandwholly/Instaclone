@@ -34,8 +34,8 @@ const db = require('../db.js');
 exports.getOneById = (user_id, done) => {
   db.get().query('SELECT * FROM users WHERE id = ?', user_id, (err, rows) => {
     if (err) return done(err);
-    const { id, username, email } = rows[0];
-    done(null, { id, username, email });
+    const { id, username, email, created_at } = rows[0];
+    done(null, { id, username, email, created_at });
   });
 }
 
@@ -43,17 +43,22 @@ exports.getOneByEmail = (email, done) => {
 
   db.get().query('SELECT * FROM users WHERE email = ?', email, (err, rows) => {
     if (err) { return done(err); }
-    const user = rows[0];
-    done(null, user);
+    if(rows.length) {
+      const { id, username, email, created_at } = rows[0];
+      return done(null, { id, username, email, created_at });
+    }
+    done(null, null);
   });
 }
 
 exports.getOneByUsername = (username, done) => {
-
   db.get().query('SELECT * FROM users WHERE username = ?', username, (err, rows) => {
     if (err) { return done(err); }
-    const user = rows[0];
-    done(null, user);
+    if(rows.length) {
+      const { id, username, email, created_at } = rows[0];
+      return done(null, { id, username, email, created_at });
+    }
+    done(null, null);
   });
 }
 

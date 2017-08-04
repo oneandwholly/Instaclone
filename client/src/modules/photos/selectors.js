@@ -1,13 +1,13 @@
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 import _ from 'lodash';
 import { NAME } from './constants';
-import { getByIdProp, getProfileUserIdProp } from './model';
+import { getByIdProp } from './model';
 
 export const getAll = state => state[NAME];
 
-export const getAllUsersById = _.flow(getAll, getByIdProp);
+export const getAllPhotos = _.flow(getAll, getByIdProp);
 
-export const getProfileUserId = _.flow(getAll, getProfileUserIdProp);
+
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

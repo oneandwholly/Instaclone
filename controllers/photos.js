@@ -29,3 +29,11 @@ exports.getOneById = (req, res, next) => {
   });
   next();
 }
+
+exports.getPhotosByUserId = (req, res, next) => {
+  const user_id = req.params.id;
+  return Photo.getPhotosByUserId(user_id, (error, photos) => {
+    return res.json(photos);
+  });
+  next();
+}
