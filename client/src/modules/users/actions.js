@@ -11,10 +11,13 @@ export const getUserById = (user_id) => {
         };
         return axios.get(`${app.constants.ROOT_URL}/api/v1/users/${user_id}`, config)
           .then((res) => {
-            dispatch({
-              type: u.ADD,
-              payload: res.data
-            });
+            console.log('user',res.data)
+            if(res.data) {
+              dispatch({
+                type: u.ADD,
+                payload: res.data
+              });
+            }
           })
     }
 }

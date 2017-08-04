@@ -3,18 +3,13 @@
 import { NAME } from './constants';
 // import { filterActive, filterCompleted } from './model';
 
-export const getAll = state => state[NAME];
+export const selectAll = state => state[NAME];
 
-export const getAuthenticated = state => state[NAME].authenticated;
+export const selectAuthenticated = state => state[NAME].authenticated;
 
-export const getErrorMessage = state => state[NAME].error;
+export const selectErrorMessage = state => state[NAME].error;
 
-export const getCurrentUserId = state => {
-  if(state[NAME].currentUserId)
-    return state[NAME].currentUserId;
-  else
-    return 0;
-}
+export const selectAuthUserId = state => state[NAME].authUserId;
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

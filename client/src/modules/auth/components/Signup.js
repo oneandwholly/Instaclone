@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { getErrorMessage } from '../selectors';
+import { selectErrorMessage } from '../selectors';
 import { createStructuredSelector } from 'reselect';
 
 const validate = values => {
@@ -73,7 +73,7 @@ const Signup = props => {
 };
 
 export default connect(createStructuredSelector({
-  errorMessage: getErrorMessage
+  errorMessage: selectErrorMessage
 }), actions)(reduxForm({
   form: 'signup', // a unique identifier for this form
   validate

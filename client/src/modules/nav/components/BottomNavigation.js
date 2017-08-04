@@ -14,10 +14,6 @@ class BottomNavigation extends Component {
   }
 
   render() {
-    let currentUsername = '';
-    if (this.props.currentUser) {
-      currentUsername = this.props.currentUser.username;
-    }
     const navStyle = {
       'pointerEvents': 'auto',
       'overflow': 'hidden',
@@ -54,16 +50,19 @@ class BottomNavigation extends Component {
             <Link to='/explore' style={navItemStyle}>Explore</Link>
             <Link to='/create' style={navItemStyle}>Create</Link>
             <Link to='/activity' style={navItemStyle}>Activity</Link>
-            <Link to={`/${currentUsername}`} style={navItemStyle}>Profile</Link>
+            <Link to={`/${this.props.authUsername}`} style={navItemStyle}>Profile</Link>
         </nav>
       );
   }
 }
 
 export default connect(createSelector(
-  auth.selectors.getCurrentUserId,
-  users.selectors.getAllUsersById,
-  (currentUserId, allUsersById) => ({
-    currentUser: allUsersById[currentUserId]
-  })
+  auth.selectors.selectAuthUserId,
+  users.selectors.selectAllUsers,
+  (authUserId, allUsers)=> {
+    if (allUsers[authUserId]) {
+      return { authUsername: allUsers[authUserId].username }
+    }
+    return { authUsername: null }
+  }
 ), actions)(BottomNavigation);

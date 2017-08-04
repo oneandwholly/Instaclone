@@ -3,11 +3,11 @@ import _ from 'lodash';
 import { NAME } from './constants';
 import { getByIdProp, getProfileUserIdProp } from './model';
 
-export const getAll = state => state[NAME];
+export const selectAll = state => state[NAME];
 
-export const getAllUsersById = _.flow(getAll, getByIdProp);
+export const selectAllUsers = _.flow(selectAll, getByIdProp);
 
-export const getProfileUserId = _.flow(getAll, getProfileUserIdProp);
+export const getProfileUserId = _.flow(selectAll, getProfileUserIdProp);
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

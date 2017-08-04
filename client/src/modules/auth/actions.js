@@ -39,34 +39,40 @@ export const signupUser = ({
       });
   }
 
-export const getUserIdFromToken = () => {
+export const fetchAuthUserFromToken = () => {
   return (dispatch) => {
+    dispatch({type: 'IS_FETCHING_USER_FROM_TOKEN'})
     const token = localStorage.getItem('token');
-    if (token) {
-      const config = {
-        headers: { authorization: token },
-        params: {
-          token: true
-        }
-      };
-
-      return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
-        .then((res) => {
-          dispatch({
-            type: a.SET_CURRENT_USER,
-            payload: res.data
-          });
-        });
-    }
-  }
-}
-
-
-export const setCurrentUser = () => {
-  return (dispatch, getState) => {
-    return dispatch(getUserIdFromToken()).then(() => {
-      const user_id = getState().auth.currentUserId;
-      return dispatch(users.actions.getUserById(user_id));
+    const config = {
+      headers: { authorization: token },
+      params: {
+        onlyToken: true
+      }
+    };
+    return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
+    .then((res) => {
+      dispatch({type: 'SUCCESS_FETCHING_USER_FROM_TOKEN'})
+      dispatch({
+        type: a.SET_AUTH_USER_ID,
+        payload: res.data.id
+      });
+      dispatch({
+        type: users.actionTypes.ADD,
+        payload: res.data
+      });
+    })
+    .catch((err) => {
+      dispatch({type: 'FAIL_FETCHING_USER_ID_FROM_TOKEN'})
     })
   }
 }
+
+
+// export const fetchCurrentUser = () => {
+//   return (dispatch, getState) => {
+//     return dispatch(getUserIdFromToken()).then(() => {
+//       const user_id = getState().auth.currentUserId;
+//       return dispatch(users.actions.getUserById(user_id));
+//     })
+//   }
+// }
