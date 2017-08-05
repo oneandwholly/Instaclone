@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { getActive } from '../selectors';
+import { withRouter } from 'react-router-dom';
 
 import BottomNavigation from './BottomNavigation';
 import UnauthNav from './UnauthNav';
@@ -18,11 +19,15 @@ class RootNavigation extends Component {
   renderBottomNavigation() {
     if(this.props.authenticated) {
       return <BottomNavigation />
+    } else if(this.props.location.pathname === '/') {
+      return <div></div>
+    } else {
+      return <UnauthNav />
     }
-    return <UnauthNav />
   }
 
   render() {
+
     const transparentStyle = {
       'position': 'fixed',
       'top': '0',
@@ -39,6 +44,6 @@ class RootNavigation extends Component {
   }
 }
 
-export default connect(createStructuredSelector({
+export default withRouter(connect(createStructuredSelector({
   active: getActive
-}), actions)(RootNavigation);
+}), actions)(RootNavigation));

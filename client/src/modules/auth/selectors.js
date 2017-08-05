@@ -9,7 +9,7 @@ export const selectAuthenticated = state => state[NAME].authenticated;
 
 export const selectErrorMessage = state => state[NAME].error;
 
-export const selectAuthUserId = state => state[NAME].authUserId;
+export const selectUserId = state => state[NAME].userId;
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

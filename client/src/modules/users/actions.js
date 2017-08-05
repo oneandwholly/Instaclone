@@ -4,6 +4,40 @@ import * as u from './actionTypes';
 import app from '../app';
 import photos from '../photos';
 
+export const fetchUserByToken = (token) => {
+  return (dispatch) => {
+    dispatch({type: 'IS_FETCHING_USER_BY_TOKEN'})
+    const config = {
+      headers: { authorization: token },
+      params: {
+        onlyToken: true
+      }
+    };
+      return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
+      .then((res) => {
+        dispatch({type: 'SUCCESS_FETCHING_USER_BY_TOKEN'})
+        if(res.data) {
+          dispatch({
+            type: u.ADD,
+            payload: res.data
+          });
+        }
+        return res.data;
+      })
+      .catch((err) => {
+        dispatch({type: 'FAIL_FETCHING_USER_ID_BY_TOKEN'})
+      })
+    };
+  }
+
+export const fetchUserByUsername = (username) => {
+  return (dispatch) => {
+    
+  }
+}
+
+/*------------------------------------------------*/
+
 export const getUserById = (user_id) => {
     return (dispatch) => {
         const config = {
@@ -11,7 +45,6 @@ export const getUserById = (user_id) => {
         };
         return axios.get(`${app.constants.ROOT_URL}/api/v1/users/${user_id}`, config)
           .then((res) => {
-            console.log('user',res.data)
             if(res.data) {
               dispatch({
                 type: u.ADD,
@@ -55,3 +88,17 @@ export const getProfileDataByUsername = (username) => {
     })
   }
 }
+
+// export const addUser = (user) => {
+//   return (dispatch) => {
+//     return dispatch({
+//       type: u.ADD,
+//       payload: user
+//     })
+//   }
+// }
+
+export const addUser = (user) => ({
+  type: u.ADD,
+  payload: user
+})

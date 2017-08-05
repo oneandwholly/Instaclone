@@ -39,31 +39,40 @@ export const signupUser = ({
       });
   }
 
-export const fetchAuthUserFromToken = () => {
+// export const fetchAuthUserFromToken = () => {
+//   return (dispatch, getState) => {
+//     dispatch(users.actions.fetchUserByToken())
+//     .then((res) => {
+//       const state = getState()
+//       dispatch({
+//         type: a.SET_AUTH_USER_ID,
+//         payload: res.data.id
+//       });
+//       dispatch(users.actions.addUser(res.data));
+//     })
+//   }
+// }
+
+export const setAuthUser = () => {
   return (dispatch) => {
-    dispatch({type: 'IS_FETCHING_USER_FROM_TOKEN'})
+    //fetch user from token
     const token = localStorage.getItem('token');
-    const config = {
-      headers: { authorization: token },
-      params: {
-        onlyToken: true
-      }
-    };
-    return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
-    .then((res) => {
-      dispatch({type: 'SUCCESS_FETCHING_USER_FROM_TOKEN'})
+    dispatch(users.actions.fetchUserByToken(token)).then((res) => {
       dispatch({
-        type: a.SET_AUTH_USER_ID,
-        payload: res.data.id
-      });
-      dispatch({
-        type: users.actionTypes.ADD,
-        payload: res.data
-      });
+        type: a.SET_USER_ID,
+        payload: res.id
+      })
     })
-    .catch((err) => {
-      dispatch({type: 'FAIL_FETCHING_USER_ID_FROM_TOKEN'})
-    })
+  }
+}
+
+export const authenticateIfTokenExists = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return dispatch({ type: a.LOGIN });
+    }
+    dispatch({ type: 'TOKEN_DOES_NOT_EXIST' });
   }
 }
 

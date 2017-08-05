@@ -15,12 +15,14 @@ const store = createStore(rootReducer, composeWithDevTools(
   // other store enhancers if any
 ));
 
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
+//
+// if (token) {
+//   store.dispatch({ type: auth.actionTypes.LOGIN });
+//   //get user info from token
+// }
 
-if (token) {
-  store.dispatch({ type: auth.actionTypes.LOGIN });
-  //get user info from token
-}
+store.dispatch(auth.actions.authenticateIfTokenExists());
 
 ReactDOM.render(
   <Provider store={store}>

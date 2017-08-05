@@ -23,3 +23,11 @@ exports.getOneById = (req, res, next) => {
   });
   next();
 }
+
+exports.test = (req, res, next) => {
+  const token = req.get('authorization');
+  if (token) {
+    next();
+  }
+  res.json({test: 'test'})
+}

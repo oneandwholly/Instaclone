@@ -57,7 +57,7 @@ class BottomNavigation extends Component {
 }
 
 export default connect(createSelector(
-  auth.selectors.selectAuthUserId,
+  auth.selectors.selectUserId,
   users.selectors.selectAllUsers,
   (authUserId, allUsers)=> {
     if (allUsers[authUserId]) {

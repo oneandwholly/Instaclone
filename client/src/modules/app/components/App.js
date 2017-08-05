@@ -13,14 +13,14 @@ class App extends Component {
   //get currently logged in user info from existing token
   componentWillMount() {
     if(this.props.authenticated) {
-      this.props.fetchAuthUserFromToken();
+      this.props.setAuthUser();
     }
   }
 
   //get user info from who just signed up or logged in
   componentWillReceiveProps(newProps) {
     if(this.props.authenticated === false && newProps.authenticated === true) {
-      newProps.fetchAuthUserFromToken();
+      newProps.setAuthUser();
     }
   }
 
@@ -51,4 +51,4 @@ class App extends Component {
 export default connect(
   createStructuredSelector({
     authenticated: auth.selectors.selectAuthenticated
-  }),{ fetchAuthUserFromToken: auth.actions.fetchAuthUserFromToken })(App);
+  }),{ setAuthUser: auth.actions.setAuthUser })(App);
