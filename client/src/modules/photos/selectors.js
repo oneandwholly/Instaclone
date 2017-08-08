@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { NAME } from './constants';
 import { getByIdProp } from './model';
 
-export const getAll = state => state[NAME];
+export const selectAll = state => state[NAME];
 
-export const getAllPhotos = _.flow(getAll, getByIdProp);
+export const selectAllPhotos = _.flow(selectAll, getByIdProp);
 
 
 

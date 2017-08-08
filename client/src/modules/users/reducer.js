@@ -12,6 +12,10 @@ export default (state = initialState, action) => {
       return { ...state, byId: newById };
     case u.SET_PROFILE_USER:
       return { ...state , profileUserId: action.payload };
+    case u.ADD_PHOTOS:
+      let user_id = action.payload.user_id;
+      let photos = action.payload.photos.map(photo => photo.id);
+      return { ...state, byId: { ...state.byId, [user_id]: { ...state.byId[user_id], photos } } }
     default :
       return state;
   }

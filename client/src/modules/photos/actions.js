@@ -87,7 +87,7 @@ export const getPhotoById = (photo_id) => {
   }
 }
 
-export const getPhotosByUserId = (user_id) => {
+export const fetchPhotosByUserId = (user_id) => {
   return (dispatch) => {
     const config = {
       headers: { authorization: localStorage.getItem('token') }
@@ -100,6 +100,7 @@ export const getPhotosByUserId = (user_id) => {
             type: p.ADD_ARRAY,
             payload: res.data
           })
+          return res.data;
       })
   }
 }

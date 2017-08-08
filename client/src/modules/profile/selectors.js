@@ -6,3 +6,5 @@ import { NAME } from './constants';
 export const selectAll = state => state[NAME];
 
 export const selectUsername = state => state[NAME].username;
+
+export const selectUserId = state => state[NAME].userId;

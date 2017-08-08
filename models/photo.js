@@ -29,7 +29,7 @@ exports.getOneById = (photo_id, done) => {
 }
 
 exports.getPhotosByUserId = (user_id, done) => {
-  db.get().query('SELECT * FROM photos WHERE user_id = ?', user_id, (err, rows) => {
+  db.get().query('SELECT * FROM photos WHERE user_id = ? ORDER BY created_at DESC', user_id, (err, rows) => {
     if (err) { return done(err) }
     done(null, rows);
   })
