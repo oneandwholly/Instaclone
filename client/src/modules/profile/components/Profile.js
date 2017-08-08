@@ -36,7 +36,7 @@ class Profile extends Component {
   render() {
     if(this.props.profileUsername) {
       return <div>
-        <section>user info
+        <section>
           <br></br>
             <br></br>
 
@@ -52,7 +52,7 @@ class Profile extends Component {
                                 <br></br>
                                   <br></br>
                                     <br></br>
-                  
+
         </section>
         <ImageGrid profilePhotos={this.props.profilePhotos}/>
       </div>

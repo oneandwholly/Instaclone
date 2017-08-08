@@ -5,6 +5,7 @@ import { getActive } from '../selectors';
 import { withRouter } from 'react-router-dom';
 
 import BottomNavigation from './BottomNavigation';
+import TopBar from './TopBar';
 import UnauthNav from './UnauthNav';
 import * as actions from '../actions';
 
@@ -14,6 +15,14 @@ class RootNavigation extends Component {
   }
   componentWillReceiveProps(newProps) {
     //console.log('newProps in RootNavigation.componentWillReceiveProps',newProps);
+  }
+
+  renderTopBar() {
+    if(this.props.authenticated) {
+      return <TopBar />
+    } else {
+      return <UnauthNav />
+    }
   }
 
   renderBottomNavigation() {
@@ -39,6 +48,7 @@ class RootNavigation extends Component {
       'height': '100%'
     }
     return <div style={transparentStyle}>
+      {this.renderTopBar()}
       {this.renderBottomNavigation()}
     </div>
   }
