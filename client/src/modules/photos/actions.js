@@ -70,8 +70,35 @@ export function postPhotos(data, cb) {
   }
 }
 
+// export const fetchPhotoById = (photo_id) => {
+//   return (dispatch, getState) => {
+//       const config = {
+//         headers: { authorization: localStorage.getItem('token') }
+//       };
+//
+//       return axios.get(`${app.constants.ROOT_URL}/api/v1/photos/${photo_id}`, config)
+//         .then((res) => {
+//           dispatch({
+//             type: p.ADD,
+//             payload: res.data
+//           });
+//           return res.data;
+//         })
+//
+//   }
+// }
+
 export const fetchPhotoById = (photo_id) => {
   return (dispatch, getState) => {
+    let photo = getState()['photos'].byId[photo_id];
+    if (photo) {
+      dispatch({
+        type: 'PHOTO_ALREADY_EXISTS'
+      });
+      return new Promise((resolve, reject) => {
+        resolve(photo);
+      });
+    }
       const config = {
         headers: { authorization: localStorage.getItem('token') }
       };

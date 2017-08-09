@@ -57,7 +57,18 @@ export const fetchUserByUsername = (username) => {
 }
 
 export const fetchUserById = (id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    let user = getState()['users'].byId[id];
+
+    if (user) {
+      dispatch({
+        type: 'USER_ALREADY_EXISTS'
+      });
+      return new Promise((resolve, reject) => {
+        resolve(user);
+      });
+    }
+
     dispatch({type: 'IS_FETCHING_USER_BY_ID'})
     const config = {
       headers: { authorization: localStorage.getItem('token') },

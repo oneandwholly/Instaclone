@@ -38,7 +38,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route path='/' exact component={this.renderIndexRoute()} />
-            <Route path='/p/:photo_id' component={card.components.Card} />
+            <Route path='/p/:photo_id' component={card.components.CardWrapper} />
             <Route path='/create' exact component={photos.components.Create} />
             <Route path='/:username' component={profile.components.Profile} />
           </Switch>

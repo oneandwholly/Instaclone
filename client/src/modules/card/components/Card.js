@@ -1,54 +1,78 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
 import { createSelector } from 'reselect';
-import { selectPhotoId, selectUserId } from '../selectors';
-import photos from '../../photos';
-import users from '../../users';
 
 class Card extends Component {
 
-  componentWillMount() {
-    this.props.setCardData(this.props.match.params.photo_id)
+  renderUserInfo(user) {
+    if (user) {
+      return <div>{user.username}</div>
+    }
+    return <div>loading user info...</div>
+  }
+
+  renderPhoto(photo) {
+    if (photo) {
+      return <div style={({'width' : '100vw'})}><img style={({ 'width': '100%'})} src={photo.img_url} /></div>
+    }
+    return <div>loading photo...</div>
+  }
+
+  renderCommentSection(comments) {
+    if (comments) {
+      <div>comments available</div>
+    }
+    return <div>loading comments...</div>
   }
 
   render() {
-    if (this.props.cardPhoto && this.props.cardUser) {
       return (
         <div>
         <div>
         <br/>
         <br/>
-        {this.props.cardUser.username}
+        {this.renderUserInfo(this.props.cardUser)}
         </div>
-
-        <div style={({'width' : '100vw'})}><img style={({ 'width': '100%'})} src={this.props.cardPhoto.img_url} /></div>
-
+        {this.renderPhoto(this.props.cardPhoto)}
         <div><button>like</button><button>comment</button></div>
         <div>number of likes</div>
-        <div>comments</div>
+        {this.renderCommentSection(this.props.cardComments)}
         </div>
       );
-    }
-    return <div>loading card...</div>
   }
+
 
 }
 
 export default connect(createSelector(
-  photos.selectors.selectAllPhotos,
-  users.selectors.selectAllUsers,
-  selectPhotoId,
-  selectUserId,
-  (allPhotos, allUsers, photoId, userId) => {
+  ((state, props) => {
+    return props.photo_id
+  }),
+  ((state, props) => {
+    return state.photos.byId;
+  }),
+  ((state, props) => {
+    return state.users.byId;
+  }),
+  (photoId, allPhotos, allUsers) => {
     let cardPhoto = null;
     let cardUser = null;
-    if(allPhotos[photoId]) {
+    let cardComments = null;
+
+    if (allPhotos[photoId]) {
       cardPhoto = allPhotos[photoId];
+
+      if (allUsers[cardPhoto.user_id]) {
+        cardUser = allUsers[cardPhoto.user_id]
+      }
+
+      // if (cardPhoto.comments) {
+      //   cardComments = cardPhoto.comments.map((commentId) => {
+      //     return allComments
+      //   })
+      // }
     }
-    if(allUsers[userId]) {
-      cardUser = allUsers[userId];
-    }
-    return { cardPhoto, cardUser }
+
+    return { cardPhoto, cardUser, cardComments }
   }
-), actions)(Card);
+))(Card);
