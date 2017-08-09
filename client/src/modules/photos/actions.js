@@ -1,14 +1,13 @@
 import axios from 'axios';
 
-import * as constants from './constants';
 import app from '../app';
 import * as p from './actionTypes';
 
 export function postPhotos(data, cb) {
   return function(dispatch) {
 
-    Date.prototype.toBasicISOString = function() {
-      return this.toISOString().replace(/[:\-]|\.\d{3}/g, '');
+    const toBasicISOString = function(date) {
+      return date.toISOString().replace(/[:-]|\.\d{3}/g, '');
     }
 
     function getDateStr(d) {
@@ -32,7 +31,7 @@ export function postPhotos(data, cb) {
         's3',
         'aws4_request'
       ].join('/');
-    const dStr = d.toBasicISOString();
+    const dStr = toBasicISOString(d);
 
     const body = {
       acl: 'public-read',
@@ -112,6 +111,15 @@ export const fetchPhotoById = (photo_id) => {
           return res.data;
         })
 
+  }
+}
+
+export const addCommentsToPhoto = ({ photo_id, comments }) => {
+  return (dispatch) => {
+    dispatch({
+      type: p.ADD_COMMENTS,
+      payload: { photo_id, comments }
+    })
   }
 }
 

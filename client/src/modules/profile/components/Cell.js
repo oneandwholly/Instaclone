@@ -18,7 +18,7 @@ class Cell extends Component {
       'display': 'block'
     }
     return (
-      <div style={cellStyle} onClick={this.handleClick.bind(this)} key={this.props.photo.id}><img style={imgStyle} src={this.props.photo.img_url} /></div>
+      <div style={cellStyle} onClick={this.handleClick.bind(this)} key={this.props.photo.id}><img style={imgStyle} src={this.props.photo.img_url} alt='' /></div>
     );
   }
 }

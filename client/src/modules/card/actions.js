@@ -16,6 +16,7 @@ export const setCardData = (photo_id) => {
           payload: res.id
         });
       })
+      //fetchCommentsByPhotoId
     })
   }
 }

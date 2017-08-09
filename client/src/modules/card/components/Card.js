@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import comments from '../../comments';
 
 class Card extends Component {
 
@@ -13,16 +14,9 @@ class Card extends Component {
 
   renderPhoto(photo) {
     if (photo) {
-      return <div style={({'width' : '100vw'})}><img style={({ 'width': '100%'})} src={photo.img_url} /></div>
+      return <div style={({'width' : '100vw'})}><img style={({ 'width': '100%'})} src={photo.img_url} alt='' /></div>
     }
     return <div>loading photo...</div>
-  }
-
-  renderCommentSection(comments) {
-    if (comments) {
-      <div>comments available</div>
-    }
-    return <div>loading comments...</div>
   }
 
   render() {
@@ -36,7 +30,7 @@ class Card extends Component {
         {this.renderPhoto(this.props.cardPhoto)}
         <div><button>like</button><button>comment</button></div>
         <div>number of likes</div>
-        {this.renderCommentSection(this.props.cardComments)}
+        <comments.components.CommentSection comments={this.props.cardComments} photo_id={(this.props.cardPhoto ? this.props.cardPhoto.id : null)} />
         </div>
       );
   }
@@ -54,7 +48,10 @@ export default connect(createSelector(
   ((state, props) => {
     return state.users.byId;
   }),
-  (photoId, allPhotos, allUsers) => {
+  ((state, props) => {
+    return state.comments.byId;
+  }),
+  (photoId, allPhotos, allUsers, allComments) => {
     let cardPhoto = null;
     let cardUser = null;
     let cardComments = null;
@@ -66,11 +63,11 @@ export default connect(createSelector(
         cardUser = allUsers[cardPhoto.user_id]
       }
 
-      // if (cardPhoto.comments) {
-      //   cardComments = cardPhoto.comments.map((commentId) => {
-      //     return allComments
-      //   })
-      // }
+      if (cardPhoto.comments) {
+        cardComments = cardPhoto.comments.map((commentId) => {
+          return allComments[commentId];
+        })
+      }
     }
 
     return { cardPhoto, cardUser, cardComments }

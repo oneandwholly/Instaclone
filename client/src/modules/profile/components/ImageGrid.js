@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect'
 import { withRouter } from 'react-router-dom';
 
 import Cell from './Cell';

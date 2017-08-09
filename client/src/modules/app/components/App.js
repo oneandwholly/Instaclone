@@ -6,7 +6,6 @@ import { createStructuredSelector } from 'reselect';
 import auth from '../../auth';
 import nav from '../../nav';
 import photos from '../../photos';
-import users from '../../users';
 import profile from '../../profile';
 import card from '../../card';
 
