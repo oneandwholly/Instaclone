@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import * as constants from './constants';
 import app from '../app';
 import * as p from './actionTypes';
 
@@ -63,15 +64,14 @@ export function postPhotos(data, cb) {
         return axios.post(s3Url, body);
       })
       .then((res) => {
-        dispatch(getPhotoById(photo_id))
+        dispatch(fetchPhotoById(photo_id))
         cb();
       })
   }
 }
 
-export const getPhotoById = (photo_id) => {
-  return (dispatch) => {
-
+export const fetchPhotoById = (photo_id) => {
+  return (dispatch, getState) => {
       const config = {
         headers: { authorization: localStorage.getItem('token') }
       };
@@ -82,6 +82,7 @@ export const getPhotoById = (photo_id) => {
             type: p.ADD,
             payload: res.data
           });
+          return res.data;
         })
 
   }
@@ -95,7 +96,6 @@ export const fetchPhotosByUserId = (user_id) => {
 
     return axios.get(`${app.constants.ROOT_URL}/api/v1/users/${user_id}/photos`, config)
       .then((res) => {
-        console.log('photos', res.data);
           dispatch({
             type: p.ADD_ARRAY,
             payload: res.data

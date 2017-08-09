@@ -21,7 +21,7 @@ class RootNavigation extends Component {
     if(this.props.authenticated) {
       return <TopBar />
     } else {
-      return <UnauthNav />
+      return <div></div>
     }
   }
 

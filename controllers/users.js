@@ -13,6 +13,14 @@ exports.getUsers = (req, res, next) => {
       return res.json(user);
     })
   }
+
+  if (req.query.id) {
+    const id = req.query.id;
+    return User.getOneById(id, (error, user) => {
+      return res.json(user);
+    })
+  }
+
   next();
 }
 

@@ -17,7 +17,7 @@ class TopBar extends Component {
     }
     return (
       <nav style={topBarStyle}>
-          
+
           </nav>
     );
   }

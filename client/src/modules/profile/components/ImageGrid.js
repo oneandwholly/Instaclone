@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect'
+import { withRouter } from 'react-router-dom';
+
+import Cell from './Cell';
 
 class ImageGrid extends Component {
   componentWillMount() {
-    console.log('fetch photos')
   }
   componentWillReceiveProps(newProps) {
-    console.log('newProps.profilePhotos', newProps.profilePhotos)
+  }
+
+  handleCellClick(photo_id) {
+    this.props.history.push(`p/${photo_id}`);
   }
 
   renderCell(photos) {
-    const cellStyle = {
-      'width': '33.33vw',
-      'height': '33.33vw'
-    }
-    const imgStyle = {
-      'width': '100%',
-      'height': '100%',
-      'display': 'block'
-    }
     return photos.map((photo) => {
-      return <div style={cellStyle} key={photo.id}><img style={imgStyle} src={photo.img_url} /></div>
+      return <Cell key={photo.id} handleCellClick={this.handleCellClick.bind(this)} photo={photo} />
     })
   }
+
 
   render() {
     const gridStyle = {
@@ -42,4 +39,4 @@ class ImageGrid extends Component {
   }
 }
 
-export default connect()(ImageGrid);
+export default withRouter(connect()(ImageGrid));

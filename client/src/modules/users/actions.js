@@ -56,6 +56,32 @@ export const fetchUserByUsername = (username) => {
   }
 }
 
+export const fetchUserById = (id) => {
+  return (dispatch) => {
+    dispatch({type: 'IS_FETCHING_USER_BY_ID'})
+    const config = {
+      headers: { authorization: localStorage.getItem('token') },
+      params: {
+        id
+      }
+    };
+      return axios.get(`${app.constants.ROOT_URL}/api/v1/users`, config)
+      .then((res) => {
+        dispatch({type: 'SUCCESS_FETCHING_USER_BY_ID'})
+        if(res.data) {
+          dispatch({
+            type: u.ADD,
+            payload: res.data
+          });
+        }
+        return res.data;
+      })
+      .catch((err) => {
+        dispatch({type: 'FAIL_FETCHING_USER_ID_BY_ID'})
+      })
+  }
+}
+
 export const addPhotosToUser = (user_id, photos) => {
   return (dispatch) => {
     dispatch({

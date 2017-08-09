@@ -13,7 +13,6 @@ import auth from '../../auth';
 
 class Profile extends Component {
   componentWillMount() {
-    console.log('profileUsername', this.props.profileUsername)
     // if user clicks profile and clicks away and returns, then it shouldn't
     // fetch the profile data again.
     if (this.props.profileUsername !== this.props.match.params.username) {
@@ -25,7 +24,6 @@ class Profile extends Component {
   componentWillReceiveProps(newProps) {
     if (this.props.match.params.username !== newProps.match.params.username) {
       this.props.setProfileUser(newProps.match.params.username);
-      console.log('should fetch new user')
     }
   }
   constructor(props) {
@@ -90,7 +88,6 @@ export default connect(createSelector(
         profilePhotos = profileUser.photos.map(photo_id => allPhotos[photo_id]);
       }
     }
-    console.log('look',profilePhotos)
 
     return { authUsername, profileUsername, profileUserId, profilePhotos }
   }

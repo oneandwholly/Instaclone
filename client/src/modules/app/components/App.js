@@ -8,6 +8,7 @@ import nav from '../../nav';
 import photos from '../../photos';
 import users from '../../users';
 import profile from '../../profile';
+import card from '../../card';
 
 class App extends Component {
   //get currently logged in user info from existing token
@@ -37,7 +38,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route path='/' exact component={this.renderIndexRoute()} />
-            <Route path='/p/:photo_id' component={photos.components.Card} />
+            <Route path='/p/:photo_id' component={card.components.Card} />
             <Route path='/create' exact component={photos.components.Create} />
             <Route path='/:username' component={profile.components.Profile} />
           </Switch>

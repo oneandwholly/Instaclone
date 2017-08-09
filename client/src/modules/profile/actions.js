@@ -22,7 +22,6 @@ export const setProfileUser = (username) => {
       const user_id = res.id;
       dispatch(photos.actions.fetchPhotosByUserId(user_id)).then((res) => {
         dispatch(users.actions.addPhotosToUser(user_id, res))
-        console.log('successfully fetched photos', res);
       })
     })
   }
