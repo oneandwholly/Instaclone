@@ -7,6 +7,10 @@ const tokenForUser = (user) => {
   return jwt.encode({ sub: user.id, iat: timestamp }, config.jwt.secret);
 }
 
+exports.login = function(req, res, next) {
+  res.send({ token: tokenForUser(req.user) });
+};
+
 exports.signup = ({ body: { username, email, password } }, res, next) => {
   if (!username || !email || !password) {
     return res.status(422).send({ error: 'You must provide username, email and password'});
@@ -40,9 +44,4 @@ exports.signup = ({ body: { username, email, password } }, res, next) => {
     });
   });
 
-}
-
-
-exports.login = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user) });
 }

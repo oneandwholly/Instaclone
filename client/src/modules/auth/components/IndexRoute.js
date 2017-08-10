@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Signup from './Signup';
+import Login from './Login';
 
 class IndexRoute extends Component {
   constructor(props) {
@@ -11,11 +12,9 @@ class IndexRoute extends Component {
   }
 
   componentWillMount() {
-    console.log('IndexRoute this.props',this.props)
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('IndexRoute NewProps',newProps)
   }
 
   toggleDisplay() {
@@ -25,11 +24,11 @@ class IndexRoute extends Component {
   render() {
     if(this.state.displaySignup) {
       return (
-        <Signup />
+        <Signup toggleDisplay={this.toggleDisplay} />
       );
     } else {
       return (
-        <div>Login</div>
+        <Login toggleDisplay={this.toggleDisplay} />
       );
     }
   }

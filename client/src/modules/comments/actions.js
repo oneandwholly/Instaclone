@@ -6,15 +6,15 @@ import photos from '../photos';
 
 export const fetchCommentById = (comment_id) => {
   return (dispatch, getState) => {
-    // let photo = getState()['photos'].byId[photo_id];
-    // if (photo) {
-    //   dispatch({
-    //     type: 'PHOTO_ALREADY_EXISTS'
-    //   });
-    //   return new Promise((resolve, reject) => {
-    //     resolve(photo);
-    //   });
-    // }
+    let comment = getState()['comments'].byId[comment_id];
+    if (comment) {
+      dispatch({
+        type: 'COMMENT_ALREADY_EXISTS'
+      });
+      return new Promise((resolve, reject) => {
+        resolve(comment);
+      });
+    }
     const config = {
       headers: { authorization: localStorage.getItem('token') }
     };
@@ -55,5 +55,31 @@ export const addComment = ({ comment_text, photo_id }) => {
           dispatch(photos.actions.addCommentsToPhoto({ photo_id: res.photo_id , comments }))
         })
       })
+  }
+}
+
+export const fetchCommentsByPhotoId = (photo_id) => {
+  return (dispatch, getState) => {
+    let comments = getState()['photos'].byId[photo_id].comments;
+    if (comments) {
+      dispatch({
+        type: 'COMMENTS_ALREADY_FETCHED'
+      });
+      return new Promise((resolve, reject) => {
+        resolve([]);
+      });
+    }
+    const config = {
+      headers: { authorization: localStorage.getItem('token') }
+    };
+
+    return axios.get(`${app.constants.ROOT_URL}/api/v1/photos/${photo_id}/comments/`, config)
+    .then((res) => {
+      dispatch({
+        type: c.ADD_ARRAY,
+        payload: res.data
+      });
+      return res.data;
+    })
   }
 }

@@ -68,6 +68,7 @@ const Signup = props => {
           Submit
         </button>
       </div>
+      Have an account? <a onClick={props.toggleDisplay}>Log in</a>
     </form>
   );
 };

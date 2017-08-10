@@ -16,11 +16,6 @@ export const signupUser = ({
   password
 }) =>
   (dispatch) => {
-    console.log({
-      username,
-      email,
-      password
-})
     return axios.post(`${app.constants.ROOT_URL}/api/v1/signup`, {
       username,
       email,
@@ -38,6 +33,34 @@ export const signupUser = ({
         dispatch(authError(res.data.error));
       });
   }
+
+  export const loginUser = ({ username, password }) => {
+    console.log({username, password})
+    return (dispatch) => {
+      return axios.post(`${app.constants.ROOT_URL}/api/v1/login`, {
+        username,
+        password
+      })
+        .then(res => {
+          localStorage.setItem('token', res.data.token);
+          dispatch({ type: a.LOGIN });
+        })
+        .catch(error => {
+          const res = error.response;
+          dispatch(authError(res.data.error));
+        });
+    }
+  }
+
+export const logoutUser = (history) => {
+  console.log('running')
+  return (dispatch) => {
+    dispatch({
+      type: a.LOGOUT
+    });
+    history.push('/');
+  }
+}
 
 // export const fetchAuthUserFromToken = () => {
 //   return (dispatch, getState) => {

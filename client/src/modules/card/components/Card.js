@@ -65,7 +65,7 @@ export default connect(createSelector(
 
       if (cardPhoto.comments) {
         cardComments = cardPhoto.comments.map((commentId) => {
-          return allComments[commentId];
+          return { ...allComments[commentId], username: allUsers[allComments[commentId].user_id].username };
         })
       }
     }

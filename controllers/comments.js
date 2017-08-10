@@ -23,7 +23,7 @@ exports.getOneById = function(req, res, next) {
 
 exports.getCommentsByPhotoId = function(req, res, next) {
   const photo_id = req.params.id;
-  return Comments.getCommentsByPhotoId(photo_id, (error, comments) => {
+  return Comment.getCommentsByPhotoId(photo_id, (error, comments) => {
     return res.json(comments);
   });
   next();

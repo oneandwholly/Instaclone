@@ -58,8 +58,8 @@ exports.getOneByUsername = (username, done) => {
   db.get().query('SELECT * FROM users WHERE username = ?', username, (err, rows) => {
     if (err) { return done(err); }
     if(rows.length) {
-      const { id, username, email, created_at } = rows[0];
-      return done(null, { id, username, email, created_at });
+      //used for comparing password, should return the whole user
+      return done(null, rows[0]);
     }
     done(null, null);
   });

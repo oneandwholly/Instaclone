@@ -4,8 +4,9 @@ import * as u from './actionTypes';
 import app from '../app';
 import photos from '../photos';
 
-export const fetchUserByToken = (token) => {
+export const fetchUserByToken = () => {
   return (dispatch) => {
+    const token = localStorage.getItem('token');
     dispatch({type: 'IS_FETCHING_USER_BY_TOKEN'})
     const config = {
       headers: { authorization: token },

@@ -31,13 +31,18 @@ class Profile extends Component {
 
     this.state = { profileUsername: this.props.match.params.username };
   }
+
+  handleLogout(e) {
+    e.preventDefault();
+    this.props.logoutUser(this.props.history)
+  }
   render() {
     if(this.props.profileUsername) {
       return <div>
         <section>
           <br></br>
             <br></br>
-
+            <a onClick={this.handleLogout.bind(this)}>Log Out</a>
               <br></br>
                 <br></br>
                   <br></br>
@@ -91,4 +96,4 @@ export default connect(createSelector(
 
     return { authUsername, profileUsername, profileUserId, profilePhotos }
   }
-), actions)(Profile);
+), { ...actions, logoutUser: auth.actions.logoutUser })(Profile);
