@@ -16,6 +16,8 @@ export default (state = initialState, action) => {
       let user_id = action.payload.user_id;
       let photos = action.payload.photos.map(photo => photo.id);
       return { ...state, byId: { ...state.byId, [user_id]: { ...state.byId[user_id], photos } } }
+      case 'auth/LOGOUT':
+        return initialState;
     default :
       return state;
   }

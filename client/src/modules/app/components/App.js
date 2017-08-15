@@ -6,23 +6,10 @@ import { createStructuredSelector } from 'reselect';
 import auth from '../../auth';
 import nav from '../../nav';
 import photos from '../../photos';
-import profile from '../../profile';
+import profiles from '../../profiles';
 import card from '../../card';
 
 class App extends Component {
-  //get currently logged in user info from existing token
-  componentWillMount() {
-    if(this.props.authenticated) {
-      this.props.setAuthUser();
-    }
-  }
-
-  //get user info from who just signed up or logged in
-  componentWillReceiveProps(newProps) {
-    if(this.props.authenticated === false && newProps.authenticated === true) {
-      newProps.setAuthUser();
-    }
-  }
 
   renderIndexRoute() {
     if (this.props.authenticated) {
@@ -39,7 +26,7 @@ class App extends Component {
             <Route path='/' exact component={this.renderIndexRoute()} />
             <Route path='/p/:photo_id' component={card.components.CardWrapper} />
             <Route path='/create' exact component={photos.components.Create} />
-            <Route path='/:username' component={profile.components.Profile} />
+            <Route path='/:username' component={profiles.components.Profile} />
           </Switch>
           <nav.components.RootNavigation authenticated={this.props.authenticated} />
         </div>
@@ -51,4 +38,4 @@ class App extends Component {
 export default connect(
   createStructuredSelector({
     authenticated: auth.selectors.selectAuthenticated
-  }),{ setAuthUser: auth.actions.setAuthUser })(App);
+  }))(App);

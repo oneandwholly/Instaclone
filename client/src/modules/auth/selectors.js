@@ -1,15 +1,15 @@
 //import { createSelector } from 'reselect';
-//import _ from 'lodash';
+import _ from 'lodash';
 import { NAME } from './constants';
-// import { filterActive, filterCompleted } from './model';
+ import { getAuthenticated, getUserId, getError } from './model';
 
 export const selectAll = state => state[NAME];
 
-export const selectAuthenticated = state => state[NAME].authenticated;
+export const selectAuthenticated = _.flow(selectAll, getAuthenticated);
 
-export const selectErrorMessage = state => state[NAME].error;
+export const selectErrorMessage = _.flow(selectAll, getError);
 
-export const selectUserId = state => state[NAME].userId;
+export const selectUserId = _.flow(selectAll, getUserId);
 
 // export const getCompleted = _.compose(filterCompleted, getAll);
 //

@@ -24,6 +24,8 @@ export default (state = initialState, action) => {
         return { ...state, byId: { ...state.byId, [photo_id]: { ...state.byId[photo_id], comments: [...state.byId[photo_id].comments, ...newComments ] } }}
       }
       return { ...state, byId: { ...state.byId, [photo_id]: { ...state.byId[photo_id], comments: newComments } }}
+    case 'auth/LOGOUT':
+      return initialState;
     default :
       return state;
   }

@@ -47,7 +47,7 @@ export const addComment = ({ comment_text, photo_id }) => {
       .then(res => {
         comment_id=res.data.insertId;
         dispatch(fetchCommentById(comment_id)).then((res) => {
-          let photo_id = res.photo_id;
+          //let photo_id = res.photo_id;
           let comments = null;
           if (!Array.isArray(res)) {
             comments=[res]

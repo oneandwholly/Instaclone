@@ -15,7 +15,11 @@ const store = createStore(rootReducer, composeWithDevTools(
   // other store enhancers if any
 ));
 
-store.dispatch(auth.actions.authenticateIfTokenExists());
+const token = localStorage.getItem('token');
+
+if (token) {
+  store.dispatch(auth.actions.authenticateWithToken(token))
+}
 
 ReactDOM.render(
   <Provider store={store}>

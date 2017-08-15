@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as a from './actionTypes';
-import app from '../app';
+import core from '../core';
 import users from '../users';
 //import * as constants from './constants;'
 
@@ -10,23 +10,36 @@ export const authError = (error) =>
         payload: error
     })
 
+export const authenticateWithToken = (token) => {
+  return (dispatch) => {
+    dispatch({ type: a.LOGIN });
+    dispatch(users.actions.fetchUserByToken(token)).then((res) => {
+      dispatch({
+        type: a.SET_USER_ID,
+        payload: res.id
+      })
+    })
+  }
+}
+
 export const signupUser = ({
   username,
   email,
   password
 }) =>
   (dispatch) => {
-    return axios.post(`${app.constants.ROOT_URL}/api/v1/signup`, {
+    return axios.post(`${core.constants.ROOT_URL}/api/v1/signup`, {
       username,
       email,
       password
     })
       .then(res => {
+        const token = res.data.token;
         // If request is good..
         // - Save the JWT token
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('token', token);
         // - Update the state to indicate user is authenticated
-        dispatch({ type: a.LOGIN });
+        dispatch(authenticateWithToken(token));
       })
       .catch(error => {
         const res = error.response;
@@ -35,15 +48,15 @@ export const signupUser = ({
   }
 
   export const loginUser = ({ username, password }) => {
-    console.log({username, password})
     return (dispatch) => {
-      return axios.post(`${app.constants.ROOT_URL}/api/v1/login`, {
+      return axios.post(`${core.constants.ROOT_URL}/api/v1/login`, {
         username,
         password
       })
         .then(res => {
-          localStorage.setItem('token', res.data.token);
-          dispatch({ type: a.LOGIN });
+          const token = res.data.token;
+          localStorage.setItem('token', token);
+          dispatch(authenticateWithToken(token));
         })
         .catch(error => {
           const res = error.response;
@@ -53,8 +66,9 @@ export const signupUser = ({
   }
 
 export const logoutUser = (history) => {
-  console.log('running')
+  console.log('run')
   return (dispatch) => {
+    localStorage.removeItem('token');
     dispatch({
       type: a.LOGOUT
     });
@@ -76,28 +90,28 @@ export const logoutUser = (history) => {
 //   }
 // }
 
-export const setAuthUser = () => {
+// export const setAuthUser = () => {
+//   return (dispatch) => {
+//     //fetch user from token
+//     const token = localStorage.getItem('token');
+//     dispatch(users.actions.fetchUserByToken(token)).then((res) => {
+//       dispatch({
+//         type: a.SET_USER_ID,
+//         payload: res.id
+//       })
+//     })
+//   }
+// }
+export const setAuthUserId = (userId) => {
   return (dispatch) => {
-    //fetch user from token
-    const token = localStorage.getItem('token');
-    dispatch(users.actions.fetchUserByToken(token)).then((res) => {
-      dispatch({
-        type: a.SET_USER_ID,
-        payload: res.id
-      })
+    dispatch({
+      type: a.SET_USER_ID,
+      payload: userId
     })
   }
 }
 
-export const authenticateIfTokenExists = () => {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      return dispatch({ type: a.LOGIN });
-    }
-    dispatch({ type: 'TOKEN_DOES_NOT_EXIST' });
-  }
-}
+
 
 
 // export const fetchCurrentUser = () => {

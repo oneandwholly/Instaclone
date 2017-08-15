@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { getActive } from '../selectors';
+//import { connect } from 'react-redux';
+//import { createStructuredSelector } from 'reselect';
+//import { getActive } from '../selectors';
 import { withRouter } from 'react-router-dom';
 
 import BottomNavigation from './BottomNavigation';
 import TopBar from './TopBar';
 import UnauthNav from './UnauthNav';
-import * as actions from '../actions';
+//import * as actions from '../actions';
 
 class RootNavigation extends Component {
   componentWillMount() {
@@ -54,6 +54,4 @@ class RootNavigation extends Component {
   }
 }
 
-export default withRouter(connect(createStructuredSelector({
-  active: getActive
-}), actions)(RootNavigation));
+export default withRouter((RootNavigation));

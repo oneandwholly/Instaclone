@@ -10,7 +10,8 @@ exports.getUsers = (req, res, next) => {
   if (req.query.username) {
     const username = req.query.username;
     return User.getOneByUsername(username, (error, user) => {
-      return res.json(user);
+      const { id, username, email, created_at } = user;
+      return res.json({ id, username, email, created_at});
     })
   }
 

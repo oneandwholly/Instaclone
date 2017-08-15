@@ -4,9 +4,9 @@ const aws = require('../services/aws');
 exports.upload = function(req, res, next) {
   const img_url = `https://${req.body.bucket}.s3.amazonaws.com/${req.body.key}`;
   const user_id = req.user.id;
-  const caption = req.body.caption;
+  //const caption = req.body.caption;
 
-  Photo.create({img_url, user_id, caption}, (err, insertId) => {
+  Photo.create({img_url, user_id, caption: 'hi'}, (err, insertId) => {
     if (err) { return next(err); }
     const resp = JSON.stringify({
       policy: req.body,

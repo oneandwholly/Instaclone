@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case a.LOGIN:
       return { ...state, error: '', authenticated: true };
     case a.LOGOUT:
-      return { ...state, error: '', authenticated: false };
+      return initialState;
     case a.SET_USER_ID:
       return { ...state, userId: action.payload };
     case a.ERROR:
