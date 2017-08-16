@@ -39,7 +39,7 @@ class Profile extends Component {
           <users.components.UserInfoSection userId={this.props.previouslyFetchedProfile.userId} />
           <button onClick={this.handleLogout.bind(this)}>logout</button>
           <br></br>
-          <photos.components.ImageGrid photoIds={this.props.previouslyFetchedProfile.photos} />
+          <photos.components.ImageGrid photoIds={this.props.previouslyFetchedProfile.photos} history={this.props.history} />
         </div>
       );
     }

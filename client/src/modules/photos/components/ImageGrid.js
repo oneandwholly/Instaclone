@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import cards from '../../cards';
 
 class ImageGrid extends Component {
+  handleCellClick(e) {
+    e.preventDefault();
+    console.log(this.props);
+  }
+
   renderCell(photo) {
     const cellStyle = {
       'width': '33.33vw',
@@ -15,7 +22,9 @@ class ImageGrid extends Component {
     }
 
     return (
-      <div style={cellStyle} key={(`${photo.user_id}/${photo.id}`)} >
+      <div style={cellStyle} onClick={() => {
+          this.props.fetchCardDataBeforeTransitioning(photo, this.props.history)
+        }} key={(`${photo.user_id}/${photo.id}`)} >
         <img style={imgStyle} src={photo.img_url} />
       </div>
     );
@@ -41,4 +50,4 @@ export default connect((state, props) => {
     photos = props.photoIds.map(photoId => state.photos.byId[photoId])
   }
   return { photos }
-})(ImageGrid);
+}, { fetchCardDataBeforeTransitioning: cards.actions.fetchCardDataBeforeTransitioning })(ImageGrid);

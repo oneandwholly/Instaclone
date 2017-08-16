@@ -7,7 +7,7 @@ import auth from '../../auth';
 import nav from '../../nav';
 import photos from '../../photos';
 import profiles from '../../profiles';
-import card from '../../card';
+import cards from '../../cards';
 
 class App extends Component {
 
@@ -24,9 +24,9 @@ class App extends Component {
         <div>
           <Switch>
             <Route path='/' exact component={this.renderIndexRoute()} />
-            <Route path='/p/:photo_id' component={card.components.CardWrapper} />
-            <Route path='/create' exact component={photos.components.Create} />
+            <Route path='/p/:photo_id' component={cards.components.CardWrapper} />
             <Route path='/:username' component={profiles.components.Profile} />
+            <Route path='/create' exact component={photos.components.Create} />
           </Switch>
           <nav.components.RootNavigation authenticated={this.props.authenticated} />
         </div>
