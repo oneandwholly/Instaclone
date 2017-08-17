@@ -25,8 +25,8 @@ class App extends Component {
           <Switch>
             <Route path='/' exact component={this.renderIndexRoute()} />
             <Route path='/p/:photo_id' component={cards.components.CardWrapper} />
-            <Route path='/:username' component={profiles.components.Profile} />
             <Route path='/create' exact component={photos.components.Create} />
+            <Route path='/:username' component={profiles.components.Profile} />
           </Switch>
           <nav.components.RootNavigation authenticated={this.props.authenticated} />
         </div>
