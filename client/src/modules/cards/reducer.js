@@ -17,7 +17,8 @@ export default (state = initialState, action) => {
       let newByPhotoId = { ...state.byPhotoId, [action.payload.id]: { userId: action.payload.user_id, comments: null } };
       return { ...state, byPhotoId: newByPhotoId };
     case c.ADD_COMMENTS:
-      return state;
+      newByPhotoId = { ...state.byPhotoId, [action.payload.photo_id]: { ...state.byPhotoId[action.payload.photo_id], comments: action.payload.comments.map(comment => comment.id)}}
+      return { ...state, byPhotoId: newByPhotoId };
     default:
       return state;
   }

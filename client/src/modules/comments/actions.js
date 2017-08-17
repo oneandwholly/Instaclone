@@ -45,30 +45,22 @@ export const addComment = ({ comment_text, photo_id }) => {
     let comment_id;
     return axios.post(`${app.constants.ROOT_URL}/api/v1/comments`, body, config)
       .then(res => {
-        comment_id=res.data.insertId;
-        dispatch(fetchCommentById(comment_id)).then((res) => {
-          //let photo_id = res.photo_id;
-          let comments = null;
-          if (!Array.isArray(res)) {
-            comments=[res]
-          }
-          dispatch(photos.actions.addCommentsToPhoto({ photo_id: res.photo_id , comments }))
-        })
+        // comment_id=res.data.insertId;
+        // dispatch(fetchCommentById(comment_id)).then((res) => {
+        //   //let photo_id = res.photo_id;
+        //   let comments = null;
+        //   if (!Array.isArray(res)) {
+        //     comments=[res]
+        //   }
+        //   dispatch(photos.actions.addCommentsToPhoto({ photo_id: res.photo_id , comments }))
+        // })
       })
   }
 }
 
 export const fetchCommentsByPhotoId = (photo_id) => {
   return (dispatch, getState) => {
-    let comments = getState()['photos'].byId[photo_id].comments;
-    if (comments) {
-      dispatch({
-        type: 'COMMENTS_ALREADY_FETCHED'
-      });
-      return new Promise((resolve, reject) => {
-        resolve([]);
-      });
-    }
+
     const config = {
       headers: { authorization: localStorage.getItem('token') }
     };

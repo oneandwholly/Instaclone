@@ -7,7 +7,7 @@ import users from './modules/users';
 import photos from './modules/photos';
 import profiles from './modules/profiles';
 import cards from './modules/cards';
-//import comments from './modules/comments';
+import comments from './modules/comments';
 
 const rootReducer = combineReducers({
   [auth.constants.NAME]: auth.reducer,
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   [photos.constants.NAME]: photos.reducer,
   [profiles.constants.NAME]: profiles.reducer,
   [cards.constants.NAME]: cards.reducer,
-//  [comments.constants.NAME]: comments.reducer,
+  [comments.constants.NAME]: comments.reducer,
   form: formReducer
 });
 

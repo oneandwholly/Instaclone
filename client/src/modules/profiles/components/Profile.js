@@ -9,7 +9,6 @@ import photos from '../../photos';
 class Profile extends Component {
   componentWillMount() {
     if (!this.props.previouslyFetchedProfile) {
-      //console.log('fetch profile with username', this.props.givenUsername)
       this.props.fetchProfile(this.props.givenUsername);
     }
   }
@@ -28,7 +27,6 @@ class Profile extends Component {
   }
 
   render() {
-    //console.log('this.props.previouslyFetchedProfile', this.props.previouslyFetchedProfile)
     if (this.props.previouslyFetchedProfile) {
       return (
         <div>

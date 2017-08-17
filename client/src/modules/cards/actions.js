@@ -1,6 +1,8 @@
 import * as c from './actionTypes';
 
 import photos from '../photos';
+import comments from '../comments';
+import users from '../users';
 
 export const fetchCardDataBeforeTransitioning = (photo, history) => {
   return (dispatch, getState) => {
@@ -17,30 +19,63 @@ export const fetchCardDataBeforeTransitioning = (photo, history) => {
         type: c.ADD_USER_ID,
         payload: photo
       })
-      // dispatch(comments.actions.fetchCommentsByPhotoId(photo.id))
-      //   .then((res) => {
-      //     dispatch({
-      //       type: c.ADD_COMMENTS,
-      //       payload: res
-      //     })
-      //   })
+      console.log('sofar')
+      dispatch(comments.actions.fetchCommentsByPhotoId(photo.id))
+        .then((res) => {
+          dispatch({
+            type: c.ADD_COMMENTS,
+            payload: { comments: res, photo_id: photo.id }
+          })
+          let commentUsers = res.reduce((acc, comment) => {
+            if (!acc.mem[comment.user_id]) {
+              acc.uniqueUserIds.push(comment.user_id);
+              acc.mem[comment.user_id] = true;
+            }
+            return acc;
+          }, { mem:{}, uniqueUserIds: [] }).uniqueUserIds
+          commentUsers.forEach((userId) => {
+            if (!getState()['users'].byId[userId]) {
+              console.log('fetching user for comment')
+              dispatch(users.actions.fetchUserById(userId))
+            }
+          })
+        })
     }
   }
 }
 
 export const fetchCardData = (photo_id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: c.ADD_PHOTO_ID,
       payload: photo_id
     })
     dispatch(photos.actions.fetchPhotoById(photo_id)).then((res) => {
-      console.log(res)
       dispatch({
         type: c.ADD_USER_ID,
         payload: res
       })
-
+      dispatch(comments.actions.fetchCommentsByPhotoId(photo_id))
+        .then((res) => {
+          dispatch({
+            type: c.ADD_COMMENTS,
+            payload: { comments: res, photo_id }
+          })
+          console.log(res)
+          let commentUsers = res.reduce((acc, comment) => {
+            if (!acc.mem[comment.user_id]) {
+              acc.uniqueUserIds.push(comment.user_id);
+              acc.mem[comment.user_id] = true;
+            }
+            return acc;
+          }, { mem:{}, uniqueUserIds: [] }).uniqueUserIds
+          commentUsers.forEach((userId) => {
+            if (!getState()['users'].byId[userId]) {
+              console.log('fetching user for comment')
+              dispatch(users.actions.fetchUserById(userId))
+            }
+          })
+        })
     })
   }
 }

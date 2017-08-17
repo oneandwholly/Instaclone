@@ -14,6 +14,7 @@ export const authenticateWithToken = (token) => {
   return (dispatch) => {
     dispatch({ type: a.LOGIN });
     dispatch(users.actions.fetchUserByToken(token)).then((res) => {
+      console.log(res)
       dispatch({
         type: a.SET_USER_ID,
         payload: res.id

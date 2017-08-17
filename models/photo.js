@@ -21,6 +21,7 @@ exports.create = ({img_url, user_id, caption}, done) => {
 }
 
 exports.getOneById = (photo_id, done) => {
+  console.log('photo_id', photo_id)
   db.get().query('SELECT * FROM photos WHERE id = ?', photo_id, (err, rows) => {
     if (err) { return done(err); }
     const { id, img_url, caption, user_id, created_at } = rows[0];
