@@ -15,6 +15,8 @@ export default (state = initialState, action) => {
         newById[comment.id] = comment;
       })
       return { ...state, byId: newById };
+    case 'auth/LOGOUT':
+      return initialState;
     default:
       return state;
   }

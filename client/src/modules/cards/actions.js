@@ -19,7 +19,6 @@ export const fetchCardDataBeforeTransitioning = (photo, history) => {
         type: c.ADD_USER_ID,
         payload: photo
       })
-      console.log('sofar')
       dispatch(comments.actions.fetchCommentsByPhotoId(photo.id))
         .then((res) => {
           dispatch({
@@ -35,7 +34,6 @@ export const fetchCardDataBeforeTransitioning = (photo, history) => {
           }, { mem:{}, uniqueUserIds: [] }).uniqueUserIds
           commentUsers.forEach((userId) => {
             if (!getState()['users'].byId[userId]) {
-              console.log('fetching user for comment')
               dispatch(users.actions.fetchUserById(userId))
             }
           })
@@ -61,7 +59,6 @@ export const fetchCardData = (photo_id) => {
             type: c.ADD_COMMENTS,
             payload: { comments: res, photo_id }
           })
-          console.log(res)
           let commentUsers = res.reduce((acc, comment) => {
             if (!acc.mem[comment.user_id]) {
               acc.uniqueUserIds.push(comment.user_id);
@@ -71,11 +68,19 @@ export const fetchCardData = (photo_id) => {
           }, { mem:{}, uniqueUserIds: [] }).uniqueUserIds
           commentUsers.forEach((userId) => {
             if (!getState()['users'].byId[userId]) {
-              console.log('fetching user for comment')
               dispatch(users.actions.fetchUserById(userId))
             }
           })
         })
+    })
+  }
+}
+
+export const addCommentToCard = (comment) => {
+  return (dispatch) => {
+    dispatch({
+      type: c.ADD_COMMENT,
+      payload: comment
     })
   }
 }

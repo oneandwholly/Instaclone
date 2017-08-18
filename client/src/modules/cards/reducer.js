@@ -19,7 +19,12 @@ export default (state = initialState, action) => {
     case c.ADD_COMMENTS:
       newByPhotoId = { ...state.byPhotoId, [action.payload.photo_id]: { ...state.byPhotoId[action.payload.photo_id], comments: action.payload.comments.map(comment => comment.id)}}
       return { ...state, byPhotoId: newByPhotoId };
+    case c.ADD_COMMENT:
+      newByPhotoId = { ...state.byPhotoId, [action.payload.photo_id]: { ...state.byPhotoId[action.payload.photo_id], comments: [ ...state.byPhotoId[action.payload.photo_id].comments, action.payload.id ]}}
+      return { ...state, byPhotoId: newByPhotoId };
     default:
       return state;
+    case 'auth/LOGOUT':
+      return initialState;
   }
 }

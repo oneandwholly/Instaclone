@@ -7,7 +7,6 @@ import * as actions from '../actions';
 class CardWrapper extends Component {
   componentWillMount() {
     if (!this.props.previouslyFetchedCard) {
-      console.log('should fetch card data')
       this.props.fetchCardData(this.props.givenPhotoId);
     }
   }
