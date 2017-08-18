@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 
 import auth from '../../auth';
 import nav from '../../nav';
@@ -21,7 +22,10 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <div style={{
+            'marginTop': '6.8vh',
+            'marginBottom': '6.8vh'
+          }}>
           <Switch>
             <Route path='/' exact component={this.renderIndexRoute()} />
             <Route path='/p/:photo_id' component={cards.components.CardWrapper} />
@@ -34,6 +38,7 @@ class App extends Component {
     );
   }
 }
+
 
 export default connect(
   createStructuredSelector({

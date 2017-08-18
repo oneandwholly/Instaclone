@@ -22,15 +22,16 @@ class BottomNavigation extends Component {
       'bottom': '0',
       'width': '100%',
       'zIndex': '222',
-      'opacity': '1'
+      'opacity': '1',
+      'height': '6.8vh'
     }
     const navItemStyle = {
       'float': 'left',
       'display': 'block',
       'color': '#111',
       'textAlign': 'center',
-      'paddingTop': '1em',
-      'paddingBottom': '1em',
+      'paddingTop': '.7em',
+      'paddingBottom': '0em',
       'paddingLeft': '0',
       'paddingRight': '0',
       'textDecoration': 'none',

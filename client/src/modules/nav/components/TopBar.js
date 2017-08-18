@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
+//import Styled_TopBar from './Styled_TopBar';
+import styled from 'styled-components';
 
 class TopBar extends Component {
   render() {
-    const topBarStyle = {
-      'pointerEvents': 'auto',
-      'overflow': 'hidden',
-      'backgroundColor': '#eee',
-      'position': 'fixed',
-      'top': '0',
-      'width': '100%',
-      'zIndex': '222',
-      'opacity': '1',
-
-      'textAlign': 'center',
-      'height': '6vh'
-    }
     return (
-      <nav style={topBarStyle}>
-
-          </nav>
+      <div className={this.props.className}>
+        wut
+      </div>
     );
   }
 }
 
-export default TopBar;
+const styledTopBar = styled(TopBar)`
+pointer-events: auto;
+overflow: hidden;
+background-color: #eee;
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 222;
+opacity: 1;
+text-align: center;
+height: 6.8vh;
+`;
+
+export default styledTopBar;

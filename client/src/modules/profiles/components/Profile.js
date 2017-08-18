@@ -30,10 +30,6 @@ class Profile extends Component {
     if (this.props.previouslyFetchedProfile) {
       return (
         <div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
           <users.components.UserInfoSection userId={this.props.previouslyFetchedProfile.userId} />
           <button onClick={this.handleLogout.bind(this)}>logout</button>
           <br></br>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //import { createStructuredSelector } from 'reselect';
 //import { getActive } from '../selectors';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 
 import BottomNavigation from './BottomNavigation';
 import TopBar from './TopBar';
@@ -36,7 +37,16 @@ class RootNavigation extends Component {
   }
 
   render() {
-
+    const transparentDiv = styled.div`
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 111;
+      background-color: rgba(0,0,255,0);
+      pointer-events: none;
+      width: 100%;
+      height 100%;
+    `;
     const transparentStyle = {
       'position': 'fixed',
       'top': '0',
@@ -47,10 +57,10 @@ class RootNavigation extends Component {
       'width': '100%',
       'height': '100%'
     }
-    return <div style={transparentStyle}>
+    return <transparentDiv>
       {this.renderTopBar()}
       {this.renderBottomNavigation()}
-    </div>
+    </transparentDiv>
   }
 }
 

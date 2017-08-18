@@ -14,10 +14,6 @@ class CardWrapper extends Component {
     if (this.props.previouslyFetchedCard) {
       return (
         <div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
           <Card photo_id={this.props.givenPhotoId} data={this.props.previouslyFetchedCard} />
         </div>
       );
