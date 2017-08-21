@@ -9,12 +9,13 @@ import nav from '../../nav';
 import photos from '../../photos';
 import profiles from '../../profiles';
 import cards from '../../cards';
+import home from '../../home';
 
 class App extends Component {
 
   renderIndexRoute() {
     if (this.props.authenticated) {
-      return photos.components.HomeFeed;
+      return home.components.Feed;
     }
     return auth.components.IndexRoute;
   }

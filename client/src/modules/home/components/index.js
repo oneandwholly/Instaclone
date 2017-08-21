@@ -1,1 +1,1 @@
-export { default as HomeFeed } from './feed';
+export { default as Feed } from './Feed';

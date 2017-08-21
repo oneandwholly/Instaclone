@@ -30,6 +30,10 @@ const renderDropzoneInput = (field) => {
 }
 
 class Create extends Component {
+  componentWillMount() {
+    console.log('set nav to create');
+    this.props.setNavToCreate();
+  }
   constructor(props) {
     super(props);
     this.state = { redirect: false };

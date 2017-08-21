@@ -3,6 +3,15 @@ import axios from 'axios';
 import app from '../app';
 import * as p from './actionTypes';
 
+export const setNavToCreate = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'nav/SET_ACTIVE',
+      payload: 'create'
+    })
+  }
+}
+
 export function postPhotos(data, cb) {
   return function(dispatch) {
 

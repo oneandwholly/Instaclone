@@ -8,6 +8,7 @@ import photos from '../../photos';
 
 class Profile extends Component {
   componentWillMount() {
+    this.props.setNavToProfile();
     if (!this.props.previouslyFetchedProfile) {
       this.props.fetchProfile(this.props.givenUsername);
     }

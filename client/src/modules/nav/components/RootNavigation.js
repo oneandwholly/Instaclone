@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 //import { createStructuredSelector } from 'reselect';
 //import { getActive } from '../selectors';
 import { withRouter } from 'react-router-dom';
@@ -28,7 +28,7 @@ class RootNavigation extends Component {
 
   renderBottomNavigation() {
     if(this.props.authenticated) {
-      return <BottomNavigation />
+      return <BottomNavigation active={this.props.active} />
     } else if(this.props.location.pathname === '/') {
       return <div></div>
     } else {
@@ -64,4 +64,7 @@ class RootNavigation extends Component {
   }
 }
 
-export default withRouter((RootNavigation));
+export default withRouter(connect((state, props) => {
+  console.log('match', props)
+  return { active: state.nav.active }
+})(RootNavigation));

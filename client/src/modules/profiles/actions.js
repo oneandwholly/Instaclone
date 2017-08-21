@@ -2,6 +2,15 @@ import users from '../users';
 import * as p from './actionTypes';
 import photos from '../photos';
 
+export const setNavToProfile = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'nav/SET_ACTIVE',
+      payload: 'profile'
+    })
+  }
+}
+
 export const fetchProfile = (username) => {
   return (dispatch) => {
     dispatch({

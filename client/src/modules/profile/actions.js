@@ -2,6 +2,7 @@ import * as p from './actionTypes';
 
 import users from '../users';
 import photos from '../photos';
+import nav from '../nav';
 
 export const setProfileUsername = (username) => {
   return (dispatch) => {
@@ -19,6 +20,8 @@ export const setProfileUser = (username) => {
         type: p.SET_USER,
         payload: res
       });
+      console.log('rung')
+      dispatch(nav.actions.selectNavigationItem('profile'));
       const user_id = res.id;
       dispatch(photos.actions.fetchPhotosByUserId(user_id)).then((res) => {
         dispatch(users.actions.addPhotosToUser(user_id, res))

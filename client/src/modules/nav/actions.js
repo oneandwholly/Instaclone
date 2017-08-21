@@ -2,6 +2,7 @@ import * as n from './actionTypes';
 import createHistory from 'history/createBrowserHistory';
 
 export const selectNavigationItem = (name) => {
+  console.log('running')
   return (dispatch) => {
     dispatch({
       type: n.SET_ACTIVE,
