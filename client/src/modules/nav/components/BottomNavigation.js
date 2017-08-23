@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import home_icon  from '../../../assets/icons/home-o.png';
-import explore_icon  from '../../../assets/icons/explore-o.png';
-import create_icon  from '../../../assets/icons/create-o.png';
-import activity_icon  from '../../../assets/icons/like-o.png';
-import profile_icon  from '../../../assets/icons/profile-o.png';
+import explore_icon  from '../../../assets/icons/search-o.png';
+import create_icon  from '../../../assets/icons/camera-o.png';
+import activity_icon  from '../../../assets/icons/heart-o.png';
+import profile_icon  from '../../../assets/icons/user-o.png';
 
 import home_icon2  from '../../../assets/icons/home.png';
-import explore_icon2  from '../../../assets/icons/explore.png';
-import create_icon2  from '../../../assets/icons/create.png';
-import activity_icon2  from '../../../assets/icons/like.png';
-import profile_icon2  from '../../../assets/icons/profile.png';
+import explore_icon2  from '../../../assets/icons/search.png';
+import create_icon2  from '../../../assets/icons/camera.png';
+import activity_icon2  from '../../../assets/icons/heart.png';
+import profile_icon2  from '../../../assets/icons/user.png';
 //import BottomNavigationItem from './BottomNavigationItem';
 import * as actions from '../actions';
 import users from '../../users';
@@ -40,7 +40,7 @@ class BottomNavigation extends Component {
     if (name === this.props.active) {
       renderIcon = activeIcon;
     }
-    return <Link to={url} style={navItemStyle}><img src={renderIcon} style={{
+    return <Link to={url} style={navItemStyle}><img alt='' src={renderIcon} style={{
         'maxHeight': '3.7vh'
       }} /></Link>
   }
@@ -58,18 +58,18 @@ class BottomNavigation extends Component {
       'height': '6.7vh',
       'borderTop': '1px double #e7e7e7'
     }
-    const navItemStyle = {
-      'float': 'left',
-      'display': 'block',
-      'color': '#111',
-      'textAlign': 'center',
-      'paddingTop': '.7em',
-      'paddingBottom': '0em',
-      'paddingLeft': '0',
-      'paddingRight': '0',
-      'textDecoration': 'none',
-      'width': '20%'
-    };
+    // const navItemStyle = {
+    //   'float': 'left',
+    //   'display': 'block',
+    //   'color': '#111',
+    //   'textAlign': 'center',
+    //   'paddingTop': '.7em',
+    //   'paddingBottom': '0em',
+    //   'paddingLeft': '0',
+    //   'paddingRight': '0',
+    //   'textDecoration': 'none',
+    //   'width': '20%'
+    // };
 
       return (
         // <nav style={navStyle}>
@@ -81,13 +81,9 @@ class BottomNavigation extends Component {
         // </nav>
         <nav style={navStyle}>
             {this.renderItem('home', '/', home_icon, home_icon2 )}
-            <Link to='/explore' style={navItemStyle}><img src={explore_icon} style={{
-                'maxHeight': '3.7vh'
-              }} /></Link>
+            {this.renderItem('explore', '/explore', explore_icon, explore_icon2 )}
             {this.renderItem('create', '/create', create_icon, create_icon2 )}
-            <Link to='/activity' style={navItemStyle}><img src={activity_icon} style={{
-                'maxHeight': '3.7vh'
-              }} /></Link>
+            {this.renderItem('activity', '/activity', activity_icon, activity_icon2 )}
             {this.renderItem('profile', `/${this.props.authUsername}`, profile_icon, profile_icon2 )}
         </nav>
       );

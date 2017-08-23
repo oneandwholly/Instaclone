@@ -22,18 +22,11 @@ class Profile extends Component {
     }
   }
 
-  handleLogout(e) {
-    e.preventDefault();
-    this.props.logoutUser(this.props.history)
-  }
-
   render() {
     if (this.props.previouslyFetchedProfile) {
       return (
         <div>
           <users.components.UserInfoSection userId={this.props.previouslyFetchedProfile.userId} />
-          <button onClick={this.handleLogout.bind(this)}>logout</button>
-          <br></br>
           <photos.components.ImageGrid photoIds={this.props.previouslyFetchedProfile.photos} history={this.props.history} />
         </div>
       );
@@ -61,4 +54,4 @@ export default connect((state, props) => {
   }
 
   return { previouslyFetchedProfile, givenUsername, authUsername, isAuthUserProfile };
-}, {...actions, logoutUser: auth.actions.logoutUser })(Profile);
+}, {...actions })(Profile);

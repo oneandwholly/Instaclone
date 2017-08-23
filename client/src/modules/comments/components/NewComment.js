@@ -9,13 +9,14 @@ class NewComment extends Component {
     this.state = { term: "" };
   }
 
-  onInputChange(term) {
-    this.setState({term});
+  onInputChange(event) {
+    this.setState({term: event.target.value});
   }
 
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.props.addComment({'comment_text': this.state.term, 'photo_id': this.props.photo_id});
+      this.setState({ term: "" });
     }
   }
 
@@ -23,8 +24,9 @@ class NewComment extends Component {
     return (
       <input
         style={({ 'width': '99vw ' })}
-        onChange={event => this.onInputChange(event.target.value)}
+        onChange={this.onInputChange.bind(this)}
         onKeyPress={this._handleKeyPress.bind(this)}
+        value={this.state.term}
         >
       </input>
     );

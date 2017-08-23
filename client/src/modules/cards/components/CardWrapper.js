@@ -6,6 +6,7 @@ import * as actions from '../actions';
 
 class CardWrapper extends Component {
   componentWillMount() {
+    this.props.setNavToCard()
     if (!this.props.previouslyFetchedCard) {
       this.props.fetchCardData(this.props.givenPhotoId);
     }

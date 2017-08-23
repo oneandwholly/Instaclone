@@ -4,6 +4,15 @@ import photos from '../photos';
 import comments from '../comments';
 import users from '../users';
 
+export const setNavToCard = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'nav/SET_ACTIVE',
+      payload: 'card'
+    })
+  }
+}
+
 export const fetchCardDataBeforeTransitioning = (photo, history) => {
   return (dispatch, getState) => {
     let shouldFetchData = getState()['cards'].byPhotoId[photo.id] ? false : true;
